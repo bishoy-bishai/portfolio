@@ -1,0 +1,8 @@
+requests
+google-generativeai
+edge-tts
+moviepy<2.0
+decorator<5.0
+Pillow<10.0.0
+asyncio
+imageio-ffmpeg
