@@ -14,8 +14,9 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+const slug = Astro.params.slug || post.id.replace(/\.mdx?$/, '');
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} slug={slug}>
 	<Content />
 </BlogPost>

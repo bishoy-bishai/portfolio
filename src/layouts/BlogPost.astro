@@ -5,10 +5,10 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { AUTHOR_NAME } from '../consts';
 import '../styles/global.css';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
 
 const baseUrl = import.meta.env.BASE_URL;
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, slug } = Astro.props;
 ---
 
 <!doctype html>
@@ -47,14 +47,18 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<!-- Article Header -->
 				<header class="article-header">
 					<div class="container">
-						<div class="article-meta">
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<span class="updated">
-									· Updated <FormattedDate date={updatedDate} />
-								</span>
-							)}
-						</div>
+					<div class="article-meta">
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<span class="updated">
+								· Updated <FormattedDate date={updatedDate} />
+							</span>
+						)}
+						<span class="view-count" data-post-slug={slug || ''}>
+							· <span class="view-count-label">Views: </span>
+							<span class="view-count-number">—</span>
+						</span>
+					</div>
 						<h1 class="article-title">{title}</h1>
 						{description && <p class="article-description">{description}</p>}
 						<div class="article-author">
@@ -208,6 +212,15 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 	.updated {
 		color: rgba(255,255,255,0.5);
+	}
+
+	.view-count {
+		color: rgba(255,255,255,0.5);
+	}
+
+	.view-count-number {
+		color: var(--accent);
+		font-weight: 600;
 	}
 
 	.article-title {
@@ -387,3 +400,56 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		}
 	}
 </style>
+
+<script>
+	// View counter using CountAPI - tracks views per blog post
+	async function updateViewCount() {
+		const viewCountElement = document.querySelector('.view-count-number') as HTMLElement;
+		const postSlug = document.querySelector('.view-count')?.getAttribute('data-post-slug');
+		
+		if (!viewCountElement || !postSlug) return;
+
+		// Use a unique namespace for this portfolio
+		const namespace = 'portfolio-bishoy';
+		const key = `blog-${postSlug}`;
+		const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+		const getUrl = `https://api.countapi.xyz/get/${namespace}/${key}`;
+
+		try {
+			// First, get the current count
+			const getResponse = await fetch(getUrl);
+			const getData = await getResponse.json();
+			
+			if (getData.value !== undefined) {
+				// Display current count
+				viewCountElement.textContent = formatNumber(getData.value);
+			}
+
+			// Then increment (this happens in the background)
+			const hitResponse = await fetch(apiUrl);
+			const hitData = await hitResponse.json();
+			
+			if (hitData.value !== undefined) {
+				// Update with new count
+				viewCountElement.textContent = formatNumber(hitData.value);
+			}
+		} catch (error) {
+			console.error('Failed to update view count:', error);
+			// Fallback: show a placeholder
+			viewCountElement.textContent = '—';
+		}
+	}
+
+	function formatNumber(num: number): string {
+		if (num >= 1000000) {
+			return (num / 1000000).toFixed(1) + 'M';
+		}
+		if (num >= 1000) {
+			return (num / 1000).toFixed(1) + 'K';
+		}
+		return num.toString();
+	}
+
+	// Update view count when page loads
+	updateViewCount();
+</script>
