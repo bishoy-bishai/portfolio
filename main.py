@@ -12,6 +12,8 @@ TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
 CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 GEMINI_KEY = os.environ["GEMINI_API_KEY"]
 DEVTO_KEY = os.environ.get("DEVTO_API_KEY")
+DEPLOY_GITHUB_TOKEN = os.environ.get("DEPLOY_GITHUB_TOKEN")
+GITHUB_REPO = os.environ.get("GITHUB_REPO", "bishoy-bishai/portfolio")
 MODE = os.environ.get("MODE", "trends")
 
 # Site Configuration
@@ -37,6 +39,32 @@ def run_git_commands(commit_msg):
         subprocess.run(["git", "push"])
     except Exception as e:
         print(f"Git Error: {e}")
+
+def trigger_deploy():
+    """Trigger the deploy-site workflow via GitHub API."""
+    if not DEPLOY_GITHUB_TOKEN:
+        print("DEPLOY_GITHUB_TOKEN not set, skipping deploy trigger")
+        return False
+    
+    try:
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/actions/workflows/deploy-site.yml/dispatches"
+        headers = {
+            "Authorization": f"Bearer {DEPLOY_GITHUB_TOKEN}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+        data = {"ref": "main"}
+        
+        response = requests.post(url, headers=headers, json=data)
+        
+        if response.status_code == 204:
+            print("Deploy workflow triggered successfully")
+            return True
+        else:
+            print(f"Deploy trigger failed: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"Deploy trigger error: {e}")
+        return False
 
 def send_telegram(text, img_path=None, doc_path=None):
     base_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
@@ -266,6 +294,12 @@ heroImage: "../../assets/{image_filename}"
         os.remove(DRAFT_FILE)
         if os.path.exists(REVIEW_DOC): os.remove(REVIEW_DOC)
         run_git_commands(f"Published: {draft['title']}")
+        
+        # Trigger site deployment
+        if trigger_deploy():
+            send_telegram("🚀 Deploy workflow triggered!")
+        else:
+            send_telegram("⚠️ Auto-deploy skipped. Push to main will trigger deploy.")
 
     elif last_text == "2":
         send_telegram("🔄 Regenerating...")

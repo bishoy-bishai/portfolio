@@ -1,7 +1,7 @@
 ---
 title: "Building a Modern Image Gallery with Next.js 16, TypeScript & Unsplash API"
 description: "A practical guide to building a performant image gallery with Server Components, next/image optimization, and type-safe API integration."
-pubDate: "Dec 12 2025"
+pubDate: "Nov 1 2025"
 heroImage: "../../assets/building-a-modern-image-gallery-with-next-js-16--t.jpg"
 ---
 

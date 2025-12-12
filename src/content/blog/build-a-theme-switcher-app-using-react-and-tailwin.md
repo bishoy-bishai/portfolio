@@ -1,7 +1,7 @@
 ---
 title: "Build a Theme Switcher App Using React and Tailwind"
 description: "A practical guide to implementing dark mode with React Context and Tailwind CSS, with real-world insights from production apps."
-pubDate: "Dec 12 2025"
+pubDate: "Oct 10 2025"
 heroImage: "../../assets/build-a-theme-switcher-app-using-react-and-tailwin.jpg"
 ---
 
