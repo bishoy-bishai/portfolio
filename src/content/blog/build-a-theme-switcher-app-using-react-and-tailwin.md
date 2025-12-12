@@ -1,26 +1,10 @@
-# REVIEW: Build a Theme Switcher App Using React and Tailwind
+---
+title: "Build a Theme Switcher App Using React and Tailwind"
+description: "A deep dive into Build a Theme Switcher App Using React and Tailwind."
+pubDate: "Dec 12 2025"
+heroImage: "/src/assets/build-a-theme-switcher-app-using-react-and-tailwin.jpg"
+---
 
-## 🎥 Video Script
-Hey there, fellow explorers of the digital frontier! Have you ever found yourself coding late into the night, squinting at a blinding white interface, wishing for a soothing dark mode? Or maybe you’ve opened an app on a bright sunny day, only to struggle with tiny text on an even darker background? We’ve all been there. It’s not just about aesthetics; it’s about comfort, accessibility, and giving users the power to tailor their experience.
-
-Today, we're going to dive into a truly magical feature: the theme switcher. Imagine giving your users a little toggle, a simple click that transforms your entire application's look and feel, instantly adapting to their preference. It feels like a superpower, right? But the best part? It’s completely within your reach, and we’re going to build it together using the dynamic duo of React and Tailwind CSS.
-
-This isn't just about changing colors; it's about understanding how to manage application-wide state, how to make your UI responsive to user choices, and how to build truly delightful experiences. So, whether you're a night owl coder or a daylight surfer, get ready to build something awesome that everyone will appreciate. Let’s bring this vision to life!
-
-## 🐦 Expert Thread
-1/ Building a theme switcher? It's more than just aesthetics. It's about accessibility, user comfort, and providing a premium experience. 🌙☀️ Your users will thank you for letting them choose their preferred interface! #ReactJS #TailwindCSS #UX
-
-2/ The core challenge? Global state management. How do you let any component know what the current theme is, and how do you trigger an app-wide change from a simple button? This isn't a job for prop drilling! 🙅‍♀️ #FrontendDev
-
-3/ Enter React Context API. It's your secret weapon for global state. Create a `ThemeContext`, wrap your app in a `ThemeProvider`, and suddenly, `useContext` makes theme access seamless from *any* component. No prop drilling chaos! ✨ #ReactContext
-
-4/ For styling, Tailwind CSS makes it trivial. No need for complex CSS variables or multiple stylesheets. Just use the `dark:` prefix! Apply `dark:bg-gray-800` and Tailwind handles the rest, automatically applying it when the `dark` class is present on your HTML element. Efficiency unlocked! 🎨 #TailwindCSS
-
-5/ Don't forget persistence! Users expect their preferences to stick. A simple `localStorage.setItem('theme', theme)` in a `useEffect` hook ensures their choice is remembered across visits. Small detail, huge impact on user satisfaction. 💾 #WebDevTips
-
-6/ The takeaway? Combine React Context for state, Tailwind's `dark:` variant for styling, and `localStorage` for persistence. You get a robust, scalable, and delightful theme switcher with minimal effort. Go build personalized experiences! 🚀 #SoftwareArchitecture #ReactTutorial
-
-## 📝 Blog Post
 ```markdown
 # Master the Art of Personalization: Build a React & Tailwind Theme Switcher
 
