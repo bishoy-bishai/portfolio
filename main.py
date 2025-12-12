@@ -14,12 +14,18 @@ GEMINI_KEY = os.environ["GEMINI_API_KEY"]
 DEVTO_KEY = os.environ.get("DEVTO_API_KEY")
 MODE = os.environ.get("MODE", "trends")
 
+# Site Configuration
+SITE_URL = "https://bishoy-bishai.github.io"
+SITE_BASE = "/portfolio"
+AUTHOR_NAME = "Bishoy Bishai"
+AUTHOR_TITLE = "Senior Frontend Engineer"
+
 # Paths
 TRENDS_FILE = "trends.json"
 DRAFT_FILE = "draft.json"
 REVIEW_DOC = "review_copy.md"
 CONTENT_DIR = "src/content/blog"
-ASSETS_DIR = "src/assets"  # New assets folder
+ASSETS_DIR = "src/assets"
 
 # --- Helpers ---
 def run_git_commands(commit_msg):
@@ -86,15 +92,37 @@ def run_draft_mode(is_retry=False):
         model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""
+        You are {AUTHOR_NAME}, a {AUTHOR_TITLE} with 10+ years of experience.
+        
         Topic: "{topic['title']}"
-        Target: Junior Developers.
+        Audience: Professional developers and engineering teams.
         
         Generate 4 parts. Use STRICT separators.
         
-        1. VIDEO SCRIPT: Narrator text ONLY. Storytelling style. 200 words.
-        2. VISUAL PROMPT: For a 3D tech illustration (Metaphorical).
-        3. BLOG POST: Full Markdown article. Hook > Story > Code > Quiz.
-        4. TWEETS: Expert thread (ByteByteGo style).
+        1. VIDEO SCRIPT: 
+           - Confident, authoritative narrator voice
+           - Share real-world insights and lessons learned
+           - 200 words, storytelling with technical depth
+        
+        2. VISUAL PROMPT: 
+           - Dark background (#1A1A1A) with gold accents (#C9A227)
+           - Minimalist, abstract tech illustration
+           - Clean geometric shapes, no text
+           - Professional, elegant aesthetic matching portfolio theme
+        
+        3. BLOG POST (Markdown):
+           - Professional technical article
+           - Structure: Problem → Analysis → Solution → Best Practices
+           - Include practical code examples (React/TypeScript preferred)
+           - Share senior-level insights and architectural considerations
+           - Add performance tips and common pitfalls to avoid
+           - NO quizzes - this is a professional engineering blog
+           - 800-1200 words
+        
+        4. TWEETS: 
+           - Expert thread (ByteByteGo / Dan Abramov style)
+           - Confident, insightful tone
+           - 5-7 tweets max
         
         OUTPUT FORMAT:
         ===SCRIPT===
@@ -133,9 +161,10 @@ def run_draft_mode(is_retry=False):
         review_content = f"# REVIEW: {topic['title']}\n\n## 🎥 Video Script\n{script}\n\n## 🐦 Expert Thread\n{tweets}\n\n## 📝 Blog Post\n{blog}"
         with open(REVIEW_DOC, 'w', encoding='utf-8') as f: f.write(review_content)
         
-        # Generate Temp Image for Review
-        clean_prompt = re.sub(r'[^\w\s]', '', prompt_txt)[:150]
-        temp_img_url = f"https://image.pollinations.ai/prompt/wide%2016:9%20tech%20illustration%20{clean_prompt.replace(' ', '%20')}"
+        # Generate Temp Image for Review (matching portfolio dark/gold theme)
+        clean_prompt = re.sub(r'[^\w\s]', '', prompt_txt)[:120]
+        style = "dark%20background%20black%20gold%20accent%20minimalist%20abstract%20geometric%20tech%20illustration"
+        temp_img_url = f"https://image.pollinations.ai/prompt/{style}%20{clean_prompt.replace(' ', '%20')}?width=1200&height=630"
         
         # Send to Telegram
         send_telegram(f"🖼️ **Proposed Cover:** {temp_img_url}")
@@ -166,10 +195,12 @@ def run_publish_mode():
         image_filename = f"{slug}.jpg"
         local_image_path = os.path.join(ASSETS_DIR, image_filename)
         
-        # 2. Download & Save Image Locally
+        # 2. Download & Save Image Locally (matching portfolio dark/gold theme)
         try:
-            clean_prompt = re.sub(r'[^\w\s]', '', draft['img_prompt'])[:150]
-            img_url = f"https://image.pollinations.ai/prompt/wide%2016:9%20tech%20illustration%20{clean_prompt.replace(' ', '%20')}"
+            clean_prompt = re.sub(r'[^\w\s]', '', draft['img_prompt'])[:120]
+            # Style: Dark background with gold accents, minimalist tech aesthetic
+            style = "dark%20background%20black%20gold%20accent%20minimalist%20abstract%20geometric%20tech%20illustration%20professional%20elegant"
+            img_url = f"https://image.pollinations.ai/prompt/{style}%20{clean_prompt.replace(' ', '%20')}?width=1200&height=630"
             img_data = requests.get(img_url).content
             with open(local_image_path, 'wb') as f: f.write(img_data)
         except Exception as e:
@@ -182,12 +213,19 @@ def run_publish_mode():
         # Date Format: "Dec 12 2025"
         formatted_date = datetime.now().strftime("%b %d %Y")
         
-        # Blog Content with Astro Frontmatter
+        # Extract first sentence for description
+        blog_text = draft['blog'].strip()
+        first_para = blog_text.split('\n\n')[0] if '\n\n' in blog_text else blog_text[:200]
+        description = re.sub(r'[#*`\[\]]', '', first_para)[:150].strip()
+        if not description.endswith('.'):
+            description = description.rsplit(' ', 1)[0] + '...'
+        
+        # Blog Content with Astro Frontmatter (relative path for image())
         file_content = f"""---
 title: "{draft['title']}"
-description: "A deep dive into {draft['title']}."
+description: "{description}"
 pubDate: "{formatted_date}"
-heroImage: "/src/assets/{image_filename}"
+heroImage: "../../assets/{image_filename}"
 ---
 
 {draft['blog']}
@@ -195,7 +233,7 @@ heroImage: "/src/assets/{image_filename}"
         with open(md_path, 'w', encoding='utf-8') as f: f.write(file_content)
         
         # 4. External Publish (Dev.to)
-        my_url = f"https://bishoy-ai.github.io/my-tech-engine/blog/{slug}"
+        my_url = f"{SITE_URL}{SITE_BASE}/blog/{slug}"
         if DEVTO_KEY:
             url = "https://dev.to/api/articles"
             # Uploading local images to dev.to via API is complex, usually we use a public URL.
