@@ -1,33 +1,10 @@
-# REVIEW: Our SEO Journey: From SPA to Next.js (The Complete Playbook)
+---
+title: "Our SEO Journey: From SPA to Next.js (The Complete Playbook)"
+description: "Our SEO Odyssey: From SPA Stumbles to Next.js Triumph (The Complete..."
+pubDate: "Dec 16 2025"
+heroImage: "../../assets/our-seo-journey--from-spa-to-next-js--the-complete.jpg"
+---
 
-**Primary Tech:** NextJS
-
-## 🎥 Video Script
-You know that feeling when you launch a beautifully crafted Single Page Application, admiring its snappy transitions and awesome UX, only to realize… Google isn't quite as impressed? I remember one project where we poured our hearts into a React SPA, and for months, our organic traffic stubbornly refused to climb. We were scratching our heads, thinking, "The content is great! Why aren't we ranking?"
-
-Here's the thing: while SPAs offer an incredible user experience, they often present significant challenges for search engine crawlers that prefer fully rendered HTML. Our "aha!" moment came during a late-night debugging session, realizing that our initial page source was virtually empty. That's when we knew we needed a fundamental shift.
-
-Moving from that client-side rendering dependency to a framework like Next.js was a game-changer. It wasn't just about SEO; it was about performance, developer experience, and unlocking a whole new level of web presence. We embraced Server-Side Rendering and Static Site Generation, and it transformed our traffic. If you're wrestling with SPA SEO, you're not alone, and there's a clear path forward that balances performance with discoverability.
-
-## 🖼️ Image Prompt
-A minimalist, professional, and elegant visual representing the transition from a Single Page Application (SPA) to Next.js for SEO. Dark background (#1A1A1A). The left side features abstract, intertwined React component structures (atomic symbols, orbital rings) rendered sparsely, signifying an initial lack of server-side presence. A golden, flowing, abstract "N" shape (symbolizing Next.js) emerges from the center, acting as a bridge or path, leading towards the right. On the right, the "N" expands into more structured, fully rendered web pages, represented by layered, golden geometric shapes and subtle server/client split visuals, indicating optimized content delivery. Golden light emanates from the Next.js side, illuminating a conceptual growth or progress graph. The overall impression is a journey from obscurity to discoverability and performance, using symbolic elements of Next.js and React. No text, no logos.
-
-## 🐦 Expert Thread
-1/7 Remember the despair of launching a beautiful SPA, only for Google to shrug? Been there. The "client-side rendering only" mantra for SEO-critical pages is a fast track to invisibility. #SEO #WebDev
-
-2/7 Our "aha!" moment moving from SPA to Next.js for SEO wasn't just about rendering. It was about *control*. Server-side rendering isn't a silver bullet, but it gives you a fighting chance against empty initial HTML.
-
-3/7 Next.js `getServerSideProps` vs `getStaticProps`: It's not a competition, it's a careful dance. Choose wisely based on content dynamism and update frequency, or pay the performance *and* crawl budget price. #NextJS #Performance
-
-4/7 Don't underestimate `next/head`. It's your direct line to crawlers. Unique, rich meta descriptions, Open Graph tags, canonical URLs – these are your digital storefront signage. Every character counts.
-
-5/7 My biggest Next.js SEO lesson? `next/image` is a godsend. Seriously. Automatic optimization for Core Web Vitals. If you're not using it, you're leaving performance (and rankings) on the table.
-
-6/7 Moving from SPA to Next.js for SEO is less about a code refactor, more about a mindset shift. You're building for *users AND bots* from day one. That dual perspective changes everything.
-
-7/7 What's one feature or lesson from your own Next.js journey that completely transformed your SEO game? Let's share some real-world wins! 👇 #WebDevelopment #SEOJourney
-
-## 📝 Blog Post
 # Our SEO Odyssey: From SPA Stumbles to Next.js Triumph (The Complete Playbook)
 
 Remember that moment? You've just launched your shiny new Single Page Application (SPA). The user experience is buttery smooth, the client-side magic is undeniable, and you're feeling good. Then, you check your analytics. Organic traffic? Crickets. You realize your beautifully animated content, rich with data, is largely invisible to search engines. I’ve been there, pulling my hair out, wondering why Googlebot seemed to be giving my masterpiece the cold shoulder.
