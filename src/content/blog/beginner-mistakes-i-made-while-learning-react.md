@@ -1,31 +1,10 @@
-# REVIEW: Beginner mistakes I made while learning React
+---
+title: "Beginner mistakes I made while learning React"
+description: "The React Rabbit Holes I Fell Into (So You Don't Have..."
+pubDate: "Dec 20 2025"
+heroImage: "../../assets/beginner-mistakes-i-made-while-learning-react.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! You know, when I first dove into React, it felt like learning to ride a bike backwards. There were so many "aha!" moments that came *after* I'd already built something completely wrong. One that sticks with me is my early relationship with `useEffect`. I remember building a dashboard, furiously trying to fetch data and update state, only to find myself in an infinite loop. It was a classic case of not understanding dependency arrays, and I’d just slap `[]` on everything, hoping for the best.
-
-The breakthrough came when I realized `useEffect` wasn't just a `componentDidMount` replacement; it was about synchronizing side effects with your component's lifecycle based on *dependencies*. Once I truly grasped that, and stopped thinking of props as direct mutable state, my code started to breathe. It’s funny how a simple concept can feel so complex until you hit that inflection point. My big takeaway? Don't just copy-paste hooks; really dig into *why* they work the way they do. Understanding React's mental model is half the battle won.
-
-## 🖼️ Image Prompt
-Minimalist, professional, developer-focused aesthetic. A dark background (#1A1A1A) with subtle gold accents (#C9A227). In the center, a stylized React atom symbol, with orbital rings elegantly surrounding a core. From this core, several interconnected, glowing gold lines branch out, forming a component tree structure. Some of these lines initially appear tangled or broken, representing "mistakes," but then transition into clear, organized pathways, symbolizing "learning" and "correcting." Abstract visual elements like data flow arrows and small, structured blocks representing hooks (`useState`, `useEffect`) are subtly integrated, showing a journey from confusion to clarity. No text, no logos.
-
-## 🐦 Expert Thread
-1/7 First diving into React, I genuinely thought I could just slap `setState` anywhere and things would magically align. Oh, the chaos! My early "components" were just functions trying to be imperative DOM manipulators. #ReactJS #WebDev
-
-2/7 The `useEffect` hook felt like a superpower until I hit my first infinite loop. Realized it's not `componentDidMount`++. It's about *synchronizing* side effects with dependencies. Missing `[]` or wrong deps? Pain. Your linter is your friend. #ReactHooks
-
-3/7 Prop drilling is a sneaky beast. Starts innocent, then suddenly you're passing a `theme` prop through 5 layers of components that don't even use it. Recognize it early. React Context isn't always the answer, but it's a start. #FrontendDev
-
-4/7 Keys in lists: Don't use `index` as a `key` if your list items can change order or be added/removed. Please. It causes weird bugs and destroys component state. Give your items stable, unique IDs. Your users (and debug session) will thank you. #ReactTips
-
-5/7 My biggest "aha!" moment: React isn't about changing the DOM. It's about *describing* the UI for a given state, then letting React figure out the diff. Embrace the declarative mindset; stop fighting the render cycle. #JavaScript
-
-6/7 Building monolithic "god components" was another early trap. Break things down. Smaller, focused components are easier to reason about, test, and reuse. Component composition over massive files, always. #CleanCode
-
-7/7 The learning curve for React is real, but every "mistake" is a deeper dive into understanding. Don't just fix the bug, understand *why* it was a bug. What core React principle did you miss? That's where the real growth happens. What was *your* biggest early React mistake? #DeveloperJourney
-
-## 📝 Blog Post
 # The React Rabbit Holes I Fell Into (So You Don't Have To)
 
 When I first started with React, fresh off the jQuery train, it felt like entering a different dimension. Everything was components, state, props, and this mysterious "virtual DOM." It promised a declarative paradise, but my early code often looked more like a spaghetti monster trying to escape a component tree. I’ve found that many of the initial struggles aren't necessarily about complex algorithms, but about fundamentally misunderstanding how React *thinks*.
