@@ -1,184 +1,401 @@
-# REVIEW: How to Dockerize a TanStack Start React app step by step for production
+# REVIEW: 3 Simple Steps to Build a ReactJS Component for WebRTC Live Streaming
 
-**Primary Tech:** Missing
+**Primary Tech:** React
 
 ## 🎥 Video Script
-Alright team, grab a coffee. We need to talk about shipping our TanStack Start apps, not just *building* them. You know that feeling when your beautiful React app runs flawlessly on your machine, but then deployment becomes this gnarly beast of environment inconsistencies and "why isn't it loading?" errors? Yeah, I’ve been there too, more times than I’d like to admit.
+Alright, grab a coffee. Let’s talk about something that used to give a lot of developers, myself included, a bit of a headache: WebRTC. For years, the idea of building live video streaming into a web app felt like a dark art, a complex beast reserved for specialized teams. I remember one project where we tried to stitch together a basic video call, and the sheer number of moving parts – managing `PeerConnections`, handling ICE candidates, sifting through SDP offers and answers – it felt like juggling chainsaws.
 
-Here’s the thing: Docker changes the game entirely. I remember one project, we had a complex monorepo with multiple services, and getting everyone’s dev environment aligned, let alone staging and production, was a nightmare. Then we containerized everything. The "aha!" moment hit when we pushed a feature, and it just *worked* in every environment, no config drift, no last-minute dependency issues. It was like magic!
-
-For our TanStack Start apps, Docker gives us that same superpower: a clean, consistent, production-ready environment, every single time. By the end of this, you’ll have a clear path to getting your app running reliably, from your laptop straight to the cloud.
+But here’s the thing: with React, it doesn't have to be that daunting anymore. The beauty of React's component model truly shines when you tackle something as inherently stateful and interactive as WebRTC. My "aha!" moment came when I stopped thinking about WebRTC as a monolithic black box and started seeing it as a collection of modular concerns, each perfectly suited for its own React component or hook. You build a `VideoPlayer` component, a `useLocalMedia` hook, maybe a `WebRTCConnection` orchestrator, and suddenly, that big beast is a friendly collection of LEGO bricks. What felt like an impossible task becomes a structured, manageable, and even enjoyable coding challenge. Today, I'll show you how to start breaking down that complexity into three simple, digestible steps. You'll walk away realizing that robust live streaming in your React app is well within reach.
 
 ## 🖼️ Image Prompt
-A dark background (#1A1A1A) with subtle golden (#C9A227) accents. In the foreground, abstract atomic structures with glowing orbital rings interlace with a minimalist representation of React component trees, symbolizing the building blocks of a React app. These structures are encapsulated within translucent, geometric container-like shapes, hinting at Docker. A stylized, abstract whale silhouette is subtly integrated into the background, formed by data flow lines and network connections, representing a robust, interconnected system ready for production. The golden light emanates from within the containers, illuminating the React components, suggesting successful encapsulation and deployment. No text, no logos, professional and elegant.
+A visually elegant, professional developer-focused image. Dark background (#1A1A1A). Gold accents (#C9A227) are used for key visual elements. At the center, abstract representations of React's component structure: subtle, interconnected orbital rings and atomic-like elements forming a hierarchical tree. Within this structure, golden lines flow like data streams, symbolizing video and audio passing through a network. Some lines originate from a stylized, minimalist camera icon, representing local media. Other lines lead to and from a series of interconnected nodes, signifying `RTCPeerConnection` instances. The overall impression is a blend of React's modularity with the real-time, networked nature of WebRTC, emphasizing organized complexity. No text or logos, just symbolic representation.
 
 ## 🐦 Expert Thread
-1/7 Deployment shouldn't be a gamble. For our TanStack Start React apps, "it works on my machine" is a relic of the past. Enter Docker. #Docker #React #TanStack
+1/ WebRTC can feel like a black box of magic & complexity. But here's a secret: React's component model is your ultimate weapon against that intimidation. Don't build a monolith, build Lego bricks. #ReactJS #WebRTC
 
-2/7 Why Dockerize your React app? Consistency, consistency, consistency! From dev to production, Docker guarantees your app runs identically. No more dependency nightmares. #DevOps #WebDev
+2/ First brick: The humble `<video>` tag. But it's not `src`, it's `srcObject` for `MediaStream`s! A `useRef` and `useEffect` combo is all you need for a robust `VideoPlayer` component. Encapsulation FTW. #ReactHooks
 
-3/7 The secret sauce for tiny, secure production images? Multi-stage Dockerfiles. Build with Node, serve with Nginx (or Caddy). Our final image? A fraction of the build size. #DockerTips #Performance
+3/ Next, getting local media. `navigator.mediaDevices.getUserMedia()` is powerful but needs careful handling. Wrap it in a `useLocalMedia` hook for clean permissions, error handling, & crucial cleanup (`track.stop()`!). Don't leak those camera resources! #FrontendDev
 
-4/7 Don't forget your `.dockerignore`! It's like `.gitignore` for your Docker builds. Exclude `node_modules` and other build artifacts to keep your images lean and mean. #BestPractices #CleanCode
+4/ The `RTCPeerConnection` is the heart of WebRTC. It's stateful, event-driven. A `useWebRTCConnection` hook helps manage its lifecycle, `onicecandidate`, `ontrack`, and the crucial SDP offer/answer dance. Keep signaling separate, connect via props. #Realtime
 
-5/7 For single-page React apps & TanStack Start, Nginx's `try_files $uri $uri/ /index.html;` is non-negotiable. It ensures client-side routing works for deep links, preventing frustrating 404s. #Nginx #SPARouting
+5/ Pro-tip: For `RTCPeerConnection` instances within `useEffect`, use a `useRef` to store the mutable object (`pcRef.current = pc`). Avoids stale closures when event listeners need the latest `pc` instance. Saves headaches, trust me. #ReactTips
 
-6/7 Always pin your base image versions (e.g., `node:20-alpine`, not `node:latest`). Avoid unexpected breakage when a new version drops. Predictability is king in production. #ProductionReady #Reliability
-
-7/7 Dockerizing your TanStack Start app unlocks smooth CI/CD, easier scaling, and peace of mind. Are you leveraging containers for your frontends yet? What's your biggest deployment win with Docker? #FrontendDev #CloudNative
+6/ WebRTC + React isn't just possible, it's elegant. Componentizing each piece transforms a daunting task into a series of achievable, reusable steps. Focus on UI & UX, let React handle the updates. What's the wildest real-time feature you're dreaming of? #DeveloperExperience
 
 ## 📝 Blog Post
-# Dockerizing Your TanStack Start React App for Production: A Step-by-Step Guide
+# Unlocking Real-time: 3 Simple Steps to Build a ReactJS Component for WebRTC Live Streaming
 
-Hey folks, let's be real for a moment. We've all been there: you've just crafted a beautiful, performant React application using TanStack Start, you're high-fiving yourself, and then... it's time to deploy. The excitement quickly turns into a familiar dread. "It works on my machine!" becomes the project's unofficial motto, and suddenly you're wrestling with Node versions, obscure dependency issues, and production servers that just refuse to cooperate.
+Have you ever looked at a polished live streaming application and thought, "That must be incredibly complex to build"? For years, integrating real-time communication (RTC) into web applications felt like venturing into the wild west of browser APIs. The mention of WebRTC often conjured images of arcane protocols, complicated signaling servers, and endless debugging sessions.
 
-In my experience, this is precisely where Docker steps in, not as another tool to learn, but as a sanity-saver. It wraps your entire application – code, runtime, dependencies, and all – into a neat, portable package. For a TanStack Start React app, which usually compiles down to static assets, Docker provides an incredibly robust and consistent way to serve those assets efficiently and securely in any environment, from local dev to a high-traffic production setup.
+I've been there. Early in my career, tackling a WebRTC feature for a collaboration tool, I distinctly remember feeling overwhelmed by the sheer number of concepts: `getUserMedia`, `RTCPeerConnection`, SDP, ICE candidates, TURN/STUN servers. It was a lot to take in. My code was a messy tangle of imperative calls, making it incredibly hard to reason about or maintain.
 
-## Why Docker for Your TanStack Start App?
+But then, I found React. And more specifically, I realized the power of React's component model and hooks in taming this beast. React, with its declarative nature and emphasis on component-driven development, provides an elegant framework for encapsulating the complexity of WebRTC. What initially felt like an insurmountable challenge became a series of manageable, reusable building blocks.
 
-Before we dive into the bits and bytes, let's briefly touch on *why* this matters, especially for professional teams.
+In this guide, we're going to break down how to create a core React component for WebRTC live streaming in three surprisingly straightforward steps. We'll simplify the WebRTC setup, focusing on the client-side React code you need to get a video stream up and running. While a full WebRTC application requires a signaling server (a topic for another deep dive!), we'll lay the groundwork for how your React components will interact with that critical part.
 
-1.  **Consistency Across Environments**: This is the big one. Docker ensures that what runs on your machine, runs in QA, staging, and production. No more "works on my machine" headaches.
-2.  **Simplified Deployments**: Once your app is containerized, deployment becomes a simple `docker run` or a `docker-compose up`. It integrates beautifully with CI/CD pipelines.
-3.  **Isolation**: Your app runs in its own isolated environment, preventing conflicts with other applications or system-level dependencies.
-4.  **Scalability**: Docker containers are lightweight and can be easily scaled up or down using orchestrators like Kubernetes.
-5.  **Efficiency**: We can use multi-stage builds to create incredibly small, optimized production images.
+Let's dive in.
 
-## Let's Get Our Hands Dirty: Dockerizing Step-by-Step
+---
 
-I'm going to assume you already have a basic TanStack Start project up and running. If not, a quick `npm create @tanstack/start@latest` will get you started.
+### Step 1: The `VideoPlayer` – Your Visual Canvas
 
-### Step 1: Crafting Your `.dockerignore`
+Before we even think about `PeerConnections`, we need a place to display the video. In React, this means creating a reusable component. Our `VideoPlayer` component will be remarkably simple, primarily leveraging a standard HTML5 `<video>` element. The trick here is how we attach a WebRTC `MediaStream` to it.
 
-This file is just as important as your `Dockerfile`. It tells Docker what *not* to copy into your image, saving build time and keeping your image size small. Think of it as your `.gitignore` for Docker.
+`MediaStream` objects, obtained from `getUserMedia` (your local camera/mic) or from an `RTCPeerConnection` (a remote stream), aren't directly assigned via `src` attribute. Instead, they’re assigned to the `srcObject` property of the video element. Because React works with a virtual DOM, directly manipulating `srcObject` means we'll need a `ref`.
 
-```
-.git
-.gitignore
-node_modules
-npm-debug.log
-yarn-error.log
-.env
-.DS_Store
-dist
-build
-```
+Here’s what your `VideoPlayer` might look like:
 
-**Insight**: I've found forgetting `node_modules` here is a classic rookie mistake. You *don't* want your local `node_modules` copied over; you want a fresh install *inside* the container during the build process.
+```typescript
+// src/components/VideoPlayer.tsx
+import React, { useRef, useEffect } from 'react';
 
-### Step 2: The `Dockerfile` – A Multi-Stage Masterpiece
-
-For production, we always want a multi-stage Dockerfile. This pattern is brilliant because it separates the build environment (which needs Node.js, compilers, etc.) from the runtime environment (which only needs to serve static files, ideally with a tiny web server like Nginx or Caddy). This results in a much smaller, more secure final image.
-
-Let's use Nginx, a battle-tested web server, for serving our static assets.
-
-```dockerfile
-# --- STAGE 1: Build the React Application ---
-FROM node:20-alpine AS builder
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json first to leverage Docker layer caching
-# This ensures npm install is only run if dependencies change
-COPY package.json ./
-COPY yarn.lock ./ # If you use Yarn
-# COPY pnpm-lock.yaml ./ # If you use pnpm
-
-RUN npm install --frozen-lockfile # Or yarn install --frozen-lockfile or pnpm install --frozen-lockfile
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the React app for production
-# TanStack Start typically uses `npm run build` to create static assets
-RUN npm run build
-
-# --- STAGE 2: Serve the Application with Nginx ---
-FROM nginx:alpine AS production
-
-# Copy Nginx custom configuration
-# We'll create nginx.conf in the next step
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy the built React app from the builder stage to Nginx's public directory
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Expose port 80 for web traffic
-EXPOSE 80
-
-# Command to run Nginx when the container starts
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-**Here's the thing about this `Dockerfile`:**
-
-*   **`node:20-alpine`**: We use an Alpine-based Node image. Alpine Linux is incredibly small, leading to smaller intermediate and final image sizes.
-*   **Layer Caching**: Notice how `package.json` (and lock files) are copied *before* the rest of the code. This is a critical optimization. If your dependencies haven't changed, Docker will use the cached layer for `npm install`, dramatically speeding up subsequent builds.
-*   **`npm run build`**: This is where your TanStack Start app is compiled into static HTML, CSS, and JavaScript files, typically output to a `dist` directory.
-*   **`nginx:alpine`**: Again, the Alpine version for a minimal Nginx server.
-*   **`/app/dist` to `/usr/share/nginx/html`**: This is where Nginx expects to find the files it needs to serve.
-*   **`EXPOSE 80`**: Informs Docker that the container listens on port 80.
-*   **`CMD ["nginx", "-g", "daemon off;"]`**: This tells Nginx to run in the foreground, which is crucial for Docker containers as a container exits when its main process exits.
-
-### Step 3: Nginx Configuration (`nginx.conf`)
-
-We need a simple Nginx configuration to correctly serve our TanStack Start app, especially handling client-side routing. This ensures that direct requests to routes like `/about` don't result in a 404.
-
-Create a file named `nginx.conf` in the same directory as your `Dockerfile`:
-
-```nginx
-server {
-    listen 80;
-    server_name localhost;
-
-    root /usr/share/nginx/html;
-    index index.html index.htm;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Optional: Cache control for static assets (CSS, JS, images)
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
-        expires 30d;
-        add_header Cache-Control "public, no-transform";
-    }
+interface VideoPlayerProps {
+  stream: MediaStream | null;
+  muted?: boolean;
+  autoPlay?: boolean;
+  className?: string;
 }
+
+const VideoPlayer: React.FC<VideoPlayerProps> = ({
+  stream,
+  muted = false,
+  autoPlay = true,
+  className = '',
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream]); // Re-run effect if the stream changes
+
+  return (
+    <video
+      ref={videoRef}
+      muted={muted}
+      autoPlay={autoPlay}
+      playsInline // Important for mobile browsers
+      className={`w-full h-full object-cover rounded-lg shadow-md ${className}`}
+    />
+  );
+};
+
+export default VideoPlayer;
 ```
 
-**Lesson Learned**: The `try_files $uri $uri/ /index.html;` line is gold. This is what makes client-side routing work seamlessly. If Nginx can't find a direct file path, it falls back to `index.html`, allowing your React router to take over.
+**Why `playsInline`?** Ah, a classic mobile gotcha! Without `playsInline`, many mobile browsers will try to force your video into fullscreen, which isn't ideal for a multi-party video call layout. Always include it.
 
-### Step 4: Building and Running Your Docker Image
+This component is our foundational building block. It simply takes a `MediaStream` and renders it. Clean, isolated, and reusable – exactly what we want in React.
 
-Now, let's bring it all together.
+---
 
-First, build your Docker image. Remember the `.` at the end – it means "use the current directory as the build context."
+### Step 2: Grabbing Your Local Media with a Custom Hook
 
-```bash
-docker build -t tanstack-start-app:production .
+Now that we have a player, let's get some media to play! Accessing a user's camera and microphone is done via `navigator.mediaDevices.getUserMedia()`. Since this is an asynchronous operation with side effects (requesting permissions, managing the stream's lifecycle), it's a perfect candidate for a custom React hook.
+
+A custom hook, say `useLocalMedia`, can encapsulate this logic, providing a `MediaStream` object and handling permission requests and errors.
+
+```typescript
+// src/hooks/useLocalMedia.ts
+import { useState, useEffect, useRef } from 'react';
+
+interface UseLocalMediaOptions {
+  video?: boolean;
+  audio?: boolean;
+}
+
+const useLocalMedia = (options: UseLocalMediaOptions = { video: true, audio: true }) => {
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const isMounted = useRef(true); // To prevent state updates on unmounted component
+
+  useEffect(() => {
+    const getMedia = async () => {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setError(new Error('getUserMedia is not supported in this browser.'));
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(options);
+        if (isMounted.current) {
+          setLocalStream(stream);
+        }
+      } catch (err: any) {
+        console.error('Error accessing local media:', err);
+        if (isMounted.current) {
+          setError(err);
+        }
+      }
+    };
+
+    getMedia();
+
+    // Cleanup: Stop all tracks when the component unmounts
+    return () => {
+      isMounted.current = false;
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [options.video, options.audio, localStream]); // Dependency array for re-fetching media if options change
+
+  return { localStream, error };
+};
+
+export default useLocalMedia;
 ```
 
-This might take a few minutes the first time as it downloads base images and installs dependencies. Subsequent builds will be much faster thanks to layer caching.
+Now, in your main application component, you can simply do this:
 
-Once built, you can run your container:
+```typescript
+// src/App.tsx (or a parent component)
+import React from 'react';
+import VideoPlayer from './components/VideoPlayer';
+import useLocalMedia from './hooks/useLocalMedia';
 
-```bash
-docker run -p 80:80 tanstack-start-app:production
+function App() {
+  const { localStream, error } = useLocalMedia({ video: true, audio: true });
+
+  if (error) {
+    return <div className="text-red-500 p-4">Error accessing media: {error.message}</div>;
+  }
+
+  return (
+    <div className="p-8 flex justify-center items-center h-screen bg-gray-900">
+      <div className="w-1/2 h-96 relative">
+        <VideoPlayer stream={localStream} muted={true} className="border-4 border-blue-500" />
+        <p className="absolute bottom-2 left-2 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">My Camera</p>
+      </div>
+    </div>
+  );
+}
+
+export default App;
 ```
 
-Now, open your browser and navigate to `http://localhost`. You should see your TanStack Start React app happily serving from within its Docker container!
+Run this, and you should see yourself! That's a significant milestone. You've successfully abstracted away media access into a clean, reusable React pattern.
 
-### Pitfalls I've Stumbled Into (So You Don't Have To)
+---
 
-1.  **Forgetting `.dockerignore`**: As mentioned, this leads to bloated images and slower builds. Always start with it.
-2.  **Not Using Multi-Stage Builds**: A single-stage build combining Node.js and your app will be huge. Always go multi-stage for production.
-3.  **Using `latest` Tag in Production**: `FROM node:latest` can lead to unexpected breakages when new Node versions are released. Pin your versions (e.g., `node:20-alpine`).
-4.  **No `npm install --frozen-lockfile`**: This ensures that your dependencies are installed exactly as specified in your `package-lock.json`, preventing subtle dependency mismatches.
-5.  **Not Handling Client-Side Routing**: Without the `try_files` directive in Nginx, direct deep links to your React app will 404. It's a classic.
+### Step 3: Orchestrating the `RTCPeerConnection` (Simplified)
 
-## Wrapping Up
+This is where the real-time magic happens. An `RTCPeerConnection` is the core WebRTC object that handles connecting to a peer, exchanging media, and managing the connection state. For simplicity, we'll outline the key steps within a conceptual `useWebRTCConnection` hook, assuming you have a signaling mechanism (like WebSockets) already in place to exchange connection information.
 
-Dockerizing your TanStack Start React app for production isn't just about following steps; it's about adopting a mindset of consistency, efficiency, and reliability. You're not just deploying code; you're deploying a predictable, self-contained environment that will make your life (and your team's life) so much easier.
+**Here's the thing about `RTCPeerConnection`:** it doesn't just connect on its own. It needs a "signaling server" to exchange initial connection information (SDP offers/answers) and network setup details (ICE candidates) between peers. We won't build that server here, but understand that your React component will interact with it.
 
-I've found that once teams get comfortable with this pattern, the "works on my machine" problem virtually disappears. You get faster deployments, more stable environments, and more time to focus on building awesome features with TanStack Start, rather than debugging deployment woes. Give it a try, and let me know how it transforms your deployment pipeline!
+Our `useWebRTCConnection` hook will manage the `RTCPeerConnection` instance and expose methods to initiate calls, send/receive streams, and handle connection events.
+
+```typescript
+// src/hooks/useWebRTCConnection.ts
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+// For demonstration, assume a simple signaling client
+// In a real app, this would be a WebSocket client managing offer/answer/candidate exchanges
+interface SignalingClient {
+  send: (message: any) => void;
+  onMessage: (handler: (message: any) => void) => void;
+  removeMessageListener: (handler: (message: any) => void) => void;
+}
+
+interface UseWebRTCConnectionProps {
+  localStream: MediaStream | null;
+  signalingClient: SignalingClient;
+  isInitiator?: boolean; // True if this peer starts the call (creates offer)
+}
+
+const useWebRTCConnection = ({ localStream, signalingClient, isInitiator = false }: UseWebRTCConnectionProps) => {
+  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+  const connectionState = useRef<'new' | 'connecting' | 'connected' | 'disconnected' | 'failed' | 'closed'>('new');
+
+  const pcRef = useRef<RTCPeerConnection | null>(null); // Use ref for PC instance to avoid stale closures
+
+  const initPeerConnection = useCallback(() => {
+    const pc = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], // Free Google STUN server
+    });
+
+    pc.onicecandidate = (event) => {
+      if (event.candidate) {
+        signalingClient.send({ type: 'ice-candidate', candidate: event.candidate });
+      }
+    };
+
+    pc.ontrack = (event) => {
+      console.log('Remote track received!', event.streams);
+      if (event.streams && event.streams[0]) {
+        setRemoteStream(event.streams[0]);
+      }
+    };
+
+    pc.onconnectionstatechange = () => {
+      connectionState.current = pc.connectionState;
+      console.log('Peer connection state changed:', pc.connectionState);
+    };
+
+    if (localStream) {
+      localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+    }
+
+    pcRef.current = pc;
+    setPeerConnection(pc);
+    return pc;
+  }, [localStream, signalingClient]);
+
+  useEffect(() => {
+    // Only initialize PC if localStream is available
+    if (!localStream) return;
+
+    const pc = initPeerConnection();
+
+    // Signaling message handling
+    const handleSignalingMessage = async (message: any) => {
+      if (!pcRef.current) return;
+
+      try {
+        if (message.type === 'offer') {
+          await pcRef.current.setRemoteDescription(new RTCSessionDescription(message.sdp));
+          const answer = await pcRef.current.createAnswer();
+          await pcRef.current.setLocalDescription(answer);
+          signalingClient.send({ type: 'answer', sdp: pcRef.current.localDescription });
+        } else if (message.type === 'answer') {
+          await pcRef.current.setRemoteDescription(new RTCSessionDescription(message.sdp));
+        } else if (message.type === 'ice-candidate') {
+          await pcRef.current.addIceCandidate(new RTCIceCandidate(message.candidate));
+        }
+      } catch (err) {
+        console.error('Error handling signaling message:', err);
+      }
+    };
+
+    signalingClient.onMessage(handleSignalingMessage);
+
+    if (isInitiator && pc) {
+      // Create offer if this peer is the initiator
+      pc.createOffer()
+        .then(offer => pc.setLocalDescription(offer))
+        .then(() => signalingClient.send({ type: 'offer', sdp: pc.localDescription }));
+    }
+
+    return () => {
+      signalingClient.removeMessageListener(handleSignalingMessage);
+      if (pcRef.current) {
+        pcRef.current.close();
+      }
+    };
+  }, [localStream, signalingClient, isInitiator, initPeerConnection]);
+
+  // Expose methods/data for the component to use
+  return { remoteStream, connectionState: connectionState.current, peerConnection };
+};
+
+export default useWebRTCConnection;
+```
+
+**Using it in your App:**
+
+```typescript
+// src/App.tsx (continued)
+import React, { useState, useEffect } from 'react';
+import VideoPlayer from './components/VideoPlayer';
+import useLocalMedia from './hooks/useLocalMedia';
+import useWebRTCConnection from './hooks/useWebRTCConnection';
+
+// --- Mock Signaling Client (for demonstration) ---
+// In a real app, this would be a WebSocket connection to a server
+class MockSignalingClient {
+  private listeners: ((message: any) => void)[] = [];
+  send(message: any) {
+    console.log('Signaling: Sending', message.type);
+    // Simulate sending to another peer via a server
+    setTimeout(() => {
+      mockRemoteSignalingClient.receive(message); // Send to mock remote
+    }, 100);
+  }
+  onMessage(handler: (message: any) => void) {
+    this.listeners.push(handler);
+  }
+  removeMessageListener(handler: (message: any) => void) {
+    this.listeners = this.listeners.filter(l => l !== handler);
+  }
+  receive(message: any) { // Called by the other peer's `send`
+    this.listeners.forEach(handler => handler(message));
+  }
+}
+
+// Global mock clients to simulate two-way communication for this example
+const mockLocalSignalingClient = new MockSignalingClient();
+const mockRemoteSignalingClient = new MockSignalingClient();
+// Interconnect them
+// (This is a simplified mock. Real signaling would go through a server.)
+
+
+function App() {
+  const { localStream: localStream1, error: error1 } = useLocalMedia({ video: true, audio: true });
+  const { remoteStream: remoteStream1, connectionState: connectionState1 } =
+    useWebRTCConnection({ localStream: localStream1, signalingClient: mockLocalSignalingClient, isInitiator: true });
+
+  const { localStream: localStream2, error: error2 } = useLocalMedia({ video: true, audio: true });
+  const { remoteStream: remoteStream2, connectionState: connectionState2 } =
+    useWebRTCConnection({ localStream: localStream2, signalingClient: mockRemoteSignalingClient, isInitiator: false });
+
+
+  if (error1 || error2) {
+    return <div className="text-red-500 p-4">Error accessing media: {error1?.message || error2?.message}</div>;
+  }
+
+  return (
+    <div className="p-8 flex flex-col md:flex-row gap-8 justify-center items-center h-screen bg-gray-900">
+      <div className="w-full md:w-1/2 h-96 relative">
+        <VideoPlayer stream={localStream1} muted={true} className="border-4 border-blue-500" />
+        <p className="absolute bottom-2 left-2 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">My Camera (Peer 1)</p>
+        <p className="absolute top-2 right-2 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">State: {connectionState1}</p>
+      </div>
+      <div className="w-full md:w-1/2 h-96 relative">
+        <VideoPlayer stream={remoteStream1} muted={false} className="border-4 border-green-500" />
+        <p className="absolute bottom-2 left-2 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">Remote Camera (Peer 2 via Peer 1)</p>
+        <p className="absolute top-2 right-2 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">State: {connectionState1}</p>
+      </div>
+
+      {/* For a true two-way call, you'd typically have one pair of local/remote streams per peer.
+          This setup shows how two peers would manage their streams.
+          If this were a single user view, you'd show localStream1 and remoteStream1 (from peer 2).
+          The mock here implies two separate "applications" running side-by-side.
+      */}
+    </div>
+  );
+}
+
+export default App;
+```
+
+**Note on Signaling:** The `MockSignalingClient` is *extremely* simplified. In a real application, `signalingClient.send` would send messages over WebSockets (or similar) to a server, which would then forward them to the *actual* remote peer. The `onMessage` handler would receive messages *from* the signaling server that originated from the remote peer. This is the "glue" that allows WebRTC peers to find each other and negotiate a connection.
+
+---
+
+### Insights & Lessons Learned from Real Projects
+
+Here are a few things I've learned that most basic tutorials often gloss over:
+
+1.  **Robust Error Handling for `getUserMedia`**: Users deny permissions, cameras are in use, or devices simply don't exist. Always wrap `getUserMedia` in a `try...catch` and provide meaningful feedback. Showing a generic "error" isn't helpful; telling them "Camera access denied, please enable in browser settings" is.
+2.  **`useEffect` Cleanup is CRITICAL**: WebRTC resources (like `MediaStream` tracks and `RTCPeerConnection` instances) need to be explicitly stopped or closed. Neglecting `track.stop()` in your `useEffect` cleanup can leave cameras and microphones active, leading to privacy concerns and resource leaks. `pc.close()` is equally important.
+3.  **State Management for Connection Lifecycle**: Don't just show video; show the connection status (`connecting`, `connected`, `disconnected`). This greatly improves the user experience during transient network issues or when a peer drops.
+4.  **`useRef` for Stale Closures**: When dealing with `RTCPeerConnection` and event handlers within `useEffect`, you'll often run into stale closure issues if you try to directly reference `peerConnection` from state. Using a `useRef` (like `pcRef.current = pc`) to hold the mutable instance of `RTCPeerConnection` and accessing it via `pcRef.current` within callbacks prevents this common bug.
+5.  **`playsInline` and `autoplay` for `<video>`**: Remember `playsInline` for mobile. Also, `autoplay` with audio can sometimes be blocked by browsers, so consider a user-initiated play button for robustness if audio is critical on initial load.
+
+---
+
+### Wrapping Up
+
+You've just built the foundational components for a WebRTC live streaming application in React! You've seen how to:
+
+1.  Create a reusable `VideoPlayer` component.
+2.  Abstract `getUserMedia` into a clean `useLocalMedia` hook.
+3.  Set up and manage an `RTCPeerConnection` using another custom hook, ready to integrate with your signaling logic.
+
+By leveraging React's declarative power and component-based architecture, we've transformed a potentially intimidating technology into a set of manageable, testable, and maintainable pieces. This approach allows you to focus on the user experience and application logic, rather than wrestling with low-level browser APIs directly.
+
+The next steps would involve building a full signaling server (often using WebSockets), scaling to multiple peers, and implementing UI for call controls. But for now, take pride in having built the core. You're well on your way to adding powerful real-time capabilities to your React applications!
