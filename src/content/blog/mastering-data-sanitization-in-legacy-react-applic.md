@@ -1,36 +1,10 @@
-# REVIEW: Mastering Data Sanitization in Legacy React Applications: A Lead QA Engineer's Approach
+---
+title: "Mastering Data Sanitization in Legacy React Applications: A Lead QA Engineer's Approach"
+description: "Mastering Data Sanitization in Legacy React Applications: A Lead QA Engineer's..."
+pubDate: "Feb 04 2026"
+heroImage: "../../assets/mastering-data-sanitization-in-legacy-react-applic.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! Ever stared at a legacy React app, seen some funky user-generated content render, and just felt that cold dread? You know, the kind that whispers "XSS vulnerability" or "broken UI" in your ear? I’ve been there, more times than I care to admit.
-
-In my early days as a QA, I once saw a simple `<script>alert('pwned')</script>` payload slipped into a profile bio field. Our new shiny React component rendered it, and *boom*, an alert box popped up. It wasn't just a QA finding; it was a "wake up call" for the entire team. We had validation, sure, but sanitization was an afterthought, especially for older parts of the app. It highlighted a crucial difference: validation checks *what* data is there, escaping shows it safely, but *sanitization* cleans the data itself, removing anything potentially harmful.
-
-The actionable takeaway? Don't rely solely on server-side sanitization. Client-side sanitization, even in legacy React apps, is your indispensable second line of defense. Equip your components with tools like `DOMPurify`, wrap `dangerouslySetInnerHTML` in safe abstractions, and treat *all* user input as potentially malicious. It’s about building a robust, predictable user experience, not just patching holes.
-
-## 🖼️ Image Prompt
-A minimalist, professional, developer-focused image with a dark background (#1A1A1A). Dominant elements are abstract representations of React component structures, like interconnected, glowing golden (#C9A227) hexagonal nodes forming a component tree. Data flow is symbolized by golden lines moving between these nodes. At various points along these data paths, there are subtle, abstract golden 'filter' or 'shield' icons, visually suggesting a cleansing process. Some incoming data lines have a slightly jagged, unrefined appearance, while outbound lines from the 'filter' zones are smooth and polished, indicating sanitization. A central, slightly larger React atom structure (orbital rings, central core) acts as a focal point, with a golden protective aura or shield around it, symbolizing robust data handling. No text or logos.
-
-## 🐦 Expert Thread
-1/ Legacy React apps often hide treacherous paths for user input. As a QA Lead, I've seen seemingly innocent fields become XSS vectors. Sanitization isn't just a backend's job; it's a critical client-side defense. #ReactJS #WebSecurity #LegacyCode
-
-2/ Don't confuse *escaping* with *sanitization*. React escapes strings by default (good!), but if you're using `dangerouslySetInnerHTML` or rendering rich user content, you *need* to sanitize. Escaping prevents HTML injection; sanitization cleans the data itself.
-
-3/ My go-to for client-side HTML sanitization? `DOMPurify`. It's robust, fast, and configurable. But here's the kicker: configure it *wisely*. Allowing `iframe` with certain `src` patterns might be okay for a rich editor, but not for a comment section. Context is EVERYTHING.
-
-4/ Pitfall alert: relying on regex for sanitization. Just... don't. You WILL miss something. The problem is far too complex. Leverage battle-tested libraries designed by security experts. Your codebase (and future self) will thank you. #DevTips
-
-5/ For legacy React apps, my strategy is incremental:
-1. Identify all `dangerouslySetInnerHTML` uses.
-2. Create a central `SanitizedText` component with `DOMPurify`.
-3. Refactor component by component.
-4. Add client-side input sanitization before API calls.
-It's a marathon, not a sprint.
-
-6/ Beyond XSS: Sanitization also prevents UI breakage, unwanted inline styles, and bloat from malformed user content. It's about data integrity and predictable UX. Are your current safeguards truly sufficient, or are you just hoping for the best?
-
-## 📝 Blog Post
 # Mastering Data Sanitization in Legacy React Applications: A Lead QA Engineer's Approach
 
 Alright, let's grab that coffee. Because if you've spent any time working on a legacy React application, you know the feeling. It's like inheriting a beautiful old house; it has character, history, and probably a few hidden structural issues that only reveal themselves when a new storm rolls in. For us as developers and QA engineers, that "storm" often comes in the form of unsanitized user input.
