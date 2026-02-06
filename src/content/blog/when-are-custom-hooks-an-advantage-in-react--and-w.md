@@ -1,32 +1,10 @@
-# REVIEW: When Are Custom Hooks an Advantage in React, and When Do They Become a Liability?
+---
+title: "When Are Custom Hooks an Advantage in React, and When Do They Become a Liability?"
+description: "Custom Hooks: When They're Your Best Friend, and When They're Just… Extra..."
+pubDate: "Feb 06 2026"
+heroImage: "../../assets/when-are-custom-hooks-an-advantage-in-react--and-w.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-You know that feeling when you're looking at a React component, and it's just... a lot? A tangled mess of `useState`, `useEffect`, and handlers that really have nothing to do with rendering, but everything to do with the component's *behavior*? Yeah, I've been there countless times. My "aha!" moment with custom hooks came on a large dashboard project. We had like five different data tables, all doing similar fetching, loading state, error handling, and pagination logic. Copy-pasting was a nightmare, and every bug fix meant touching five places.
-
-Then we started extracting. First one, then another, then a generic `usePaginatedFetch` hook. It was like magic! Suddenly, our components shrank, becoming purely about *what* to display, not *how* to manage data. The components were simpler, bugs were easier to squash, and onboarding new devs became a breeze because the core logic was neatly encapsulated and tested. Here's the thing, though: custom hooks are a superpower, but like any superpower, you need to know when to wield it. Sometimes, you create a custom hook, and it just adds a layer of unnecessary abstraction. The trick is understanding that sweet spot between elegant reuse and over-engineering. Let's dive into that balance.
-
-## 🖼️ Image Prompt
-A minimalist, professional-grade React-themed visual. Dark background (#1A1A1A) with subtle gold accents (#C9A227) highlighting key elements. In the foreground, an abstract representation of interconnected React components as glowing, golden atomic structures with faint orbital rings. From the center of these structures, a prominent, flowing "hook" symbol (like a stylized `U` or a gently curving arrow) emerges in gold, connecting outwards to several smaller, identical component structures. This symbolizes logic being extracted and reused across multiple parts. The "hook" itself should visually represent a flexible, modular piece, subtly glowing, suggesting power and reusability. The overall aesthetic is clean, elegant, and conveys complex functionality with simple, recognizable React symbolism.
-
-## 🐦 Expert Thread
-1/ Custom Hooks are a superpower in React. They let us abstract away complex stateful logic, turning monstrous components into elegant, focused UI renderers. Truly a game-changer for maintainability. #React #CustomHooks
-
-2/ The magic? You're sharing *behavior*, not just static utilities. Think `useForm` or `useAuth`. Your components shrink, focusing purely on *what* to display, not *how* to manage intricate state transitions. Massive win for readability.
-
-3/ But here's the catch: not every `useState` needs a custom hook. Creating a `useToggle` for `const [open, setOpen] = useState(false)` might be premature abstraction. Sometimes, direct state management is clearer. #ReactTips
-
-4/ When to create one? My personal heuristic: When you find yourself copy-pasting a block of `useState`/`useEffect` logic across 2+ components. That's your signal. Otherwise, embrace YAGNI.
-
-5/ Design your hooks like mini-APIs. What inputs do they need? What outputs do they provide? A well-defined interface makes them a joy to use. A messy one becomes a liability. Clarity over cleverness, always.
-
-6/ The goal isn't just "more hooks." It's more readable, testable, and maintainable code. Custom hooks are a means to that end. They're about smart encapsulation, not just splitting files.
-
-7/ What's the most over-engineered (or brilliantly simple!) custom hook you've built or encountered? Share your `use-case`! 👇 #ReactDev #Frontend
-===
-
-## 📝 Blog Post
 # Custom Hooks: When They're Your Best Friend, and When They're Just… Extra Work
 
 Let's be real, we've all been there. Staring at a React component that started off simple, maybe a `useState` for a form field, a `useEffect` for some data fetching. Then, as features pile on, it starts to grow. Another `useState` for loading state, one for error messages, maybe a couple more `useEffect` calls for different side effects. Before you know it, you've got a component that's 200 lines long, a tangled web of stateful logic and UI concerns. It's hard to read, harder to test, and a complete nightmare to reuse.
