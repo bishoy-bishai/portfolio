@@ -1,31 +1,10 @@
-# REVIEW: Frontend Coding Challenge — Chat-Like Interface (Part 2)
+---
+title: "Frontend Coding Challenge — Chat-Like Interface (Part 2)"
+description: "Level Up Your Chat: Crafting a Performant React UI for Thousands of Messages (Part..."
+pubDate: "Feb 10 2026"
+heroImage: "../../assets/frontend-coding-challenge---chat-like-interface--p.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! Ever been really proud of that slick chat UI you built, only to watch it crumble and lag when a thousand messages flood in? I've definitely been there. I remember one project where our chat felt super snappy in development with a handful of messages. Then, during UAT, a tester just started spamming, and suddenly scrolling was a nightmare, and the whole app felt sluggish. It was a real "aha!" moment for me that a basic list isn't enough; you need to think about *performance at scale*.
-
-Here's the thing: Building a chat interface is easy. Building a *performant* chat interface that handles hundreds or thousands of messages, smooth scrolling, and real-time updates without breaking a sweat? That's the real challenge. It pushes you to master concepts like memoization, efficient state management, and smart DOM interaction. Today, we're diving into exactly that, ensuring your chat doesn't just work, but feels delightful and responsive, even under heavy load.
-
-## 🖼️ Image Prompt
-A minimalist, professional developer-focused image. Dark background (#1A1A1A). The central element is an abstract representation of a React component tree, formed by interconnected golden hexagonal nodes and subtle orbital rings (#C9A227). Within this structure, abstract chat bubbles flow upwards on the right side, suggesting a message stream, also rendered with gold outlines. A subtle, elegant gold scrollbar is visible along the right edge of the flowing bubbles. Interspersed within the component tree are small, dynamic gold arrows indicating data flow and optimization, alongside a subtle golden speedometer graphic, emphasizing performance and efficiency. No text, no logos, just clean, symbolic representations of React's architecture handling a fast-paced chat interface.
-
-## 🐦 Expert Thread
-1/7 Building a chat UI is easy. Building a *performant* chat UI that handles thousands of messages without a hiccup? That's where the real challenge (and fun) begins. It's less about features, more about finesse. #ReactJS #Frontend
-
-2/7 Your first line of defense against re-render hell in a chat app: `React.memo`. Make sure your `Message` components only re-render when their props *actually* change. This isn't optional, it's foundational. #ReactPerformance
-
-3/7 Scroll anchoring in chat is tricky. If new messages keep pushing you down while you're trying to read older ones, it's infuriating. The magic combo: `useRef` for DOM access and `useLayoutEffect` for flicker-free scroll adjustments.
-
-4/7 Why `useLayoutEffect` over `useEffect` for scroll? Because `useLayoutEffect` runs *before* the browser paints. Essential for preventing those jarring visual jumps when you're trying to maintain scroll position. Don't underestimate this distinction!
-
-5/7 A common pitfall: Forgetting `useCallback` for event handlers passed to memoized components. This will bypass your `React.memo` optimization entirely, leading to unnecessary re-renders. Check those dependencies! #ReactHooks
-
-6/7 For truly massive chat histories, `React.memo` isn't enough. You need virtualization. Libraries like `react-window` render *only* what's visible in the viewport, saving you from DOM bloat. Know when to bring out the big guns.
-
-7/7 What's the one "gotcha" in building real-time, performant chat interfaces that still catches you off guard? Is it state management, scroll behavior, or something else entirely? Share your insights! #WebDev #ChatUI
-
-## 📝 Blog Post
 # Level Up Your Chat: Crafting a Performant React UI for Thousands of Messages (Part 2)
 
 Building a chat interface in React, at first glance, seems pretty straightforward, right? A text input, a send button, and a list of messages. Easy peasy. But then, in my experience, the moment you push that initial version to a real environment, or a user starts *actually using it* for more than five minutes, you hit a wall. Suddenly, that "simple" list of messages becomes a sluggish, memory-hogging monster, and your users are complaining about janky scrolling and delayed updates.
