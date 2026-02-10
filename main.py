@@ -332,7 +332,14 @@ heroImage: "../../assets/{image_filename}"
             url = "https://dev.to/api/articles"
             # Uploading local images to dev.to via API is complex, usually we use a public URL.
             # For simplicity, we use the pollination URL for Dev.to, but local path for Astro.
-            footer = f"\n\n---\n *> 🚀 Read on [My Blog]({my_url})*"
+            footer = (
+                "\n\n---\n\n"
+                "**✨ Let's keep the conversation going!**\n\n"
+                "If you found this interesting, I'd love for you to check out more of my work or just drop in to say hello.\n\n"
+                "✍️ **Read more on my blog:** [bishoy-bishai.github.io](https://bishoy-bishai.github.io/portfolio/blog/)  \n"
+                "☕ **Let's chat on LinkedIn:** [linkedin.com/in/bishoybishai](https://www.linkedin.com/in/bishoybishai/)\n\n"
+                "---"
+            )
             data = { "article": { "title": draft['title'], "published": True, "body_markdown": draft['blog'] + footer, "main_image": img_url, "canonical_url": my_url, "tags": ["react","webdev"] } }
             requests.post(url, json=data, headers={"api-key": DEVTO_KEY, "Content-Type": "application/json"})
 
