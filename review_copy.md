@@ -1,0 +1,19 @@
+# REVIEW: Most React Developers Get This Wrong About useEffect
+
+**Primary Tech:** React
+
+## 🎥 Video Script
+Hey everyone! Ever felt like `useEffect` is a bit of a magic black box, sometimes doing exactly what you want, and other times sending you down a rabbit hole of infinite loops or stale data? You’re not alone. I’ve been there, pulling my hair out on a project where our `useEffect` hooks felt like they had a mind of their own. We'd debug for hours, only to find some subtle dependency array mistake or a missed cleanup.
+
+Here's the thing: most of us initially learn `useEffect` as "the place for side effects." And while that's true, it’s a simplification that often leads to misunderstandings. My big "aha!" moment came when I started thinking of `useEffect` not as a lifecycle hook for arbitrary code, but as a precise *synchronization mechanism*. It’s React's way of saying, "Okay, my internal state is rendered. Now, how do I sync up with the *outside world*?" Whether that's the DOM, a WebSocket, an API, or a browser API.
+
+Once you shift your mental model to "synchronizing with an external system," everything clicks. The dependency array becomes a clear contract: "Re-synchronize this bridge *only* when these external values change." Embrace that, and you'll write cleaner, more robust, and far less buggy React code.
+
+## 🖼️ Image Prompt
+A professional, minimalist visual representing React's `useEffect` hook. Dark background (#1A1A1A) with subtle gold accents (#C9A227). Abstract depiction of a React component as a central, structured node with faint orbital rings around it, symbolizing its lifecycle. From this central component, an elegant, golden-glowing bridge or gateway extends outwards, connecting it to an abstract, external system (represented by a distant, amorphous cluster of nodes or a faint, ethereal cloud). Golden data flow arrows elegantly traverse this bridge, moving from the component to the external system and back. Near the component's side of the bridge, a small, intricate golden lock or gate icon is visible, subtly composed of interconnected abstract symbols, representing the `useEffect` dependency array controlling when the bridge is activated or re-established. No text, no logos, just elegant, developer-focused symbolism.
+
+## 🐦 Expert Thread
+Missing
+
+## 📝 Blog Post
+Missing
