@@ -1,36 +1,10 @@
-# REVIEW: React Query: What Is `staleTime` and Why Should You Care?
+---
+title: "React Query: What Is `staleTime` and Why Should You Care?"
+description: "React Query: What Is staleTime and Why Should You..."
+pubDate: "Feb 26 2026"
+heroImage: "../../assets/react-query--what-is--staletime--and-why-should-yo.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Alright, gather 'round, let's chat about something that radically changed how I think about data fetching in React: `staleTime` in React Query. You know that feeling when you navigate back to a page, and for a split second, you see a loading spinner before the data pops back in? Or maybe you're doing a quick edit, navigate away, come back, and boom—another network request for data you *just* saw. Frustrating, right?
-
-I remember a project where we were seeing these micro-loading states everywhere. It was a death by a thousand papercuts for user experience. We were fetching data perfectly fine, but the UI felt... jumpy. Then, `staleTime` clicked for me. It's this beautiful concept that says, "Hey, this data is *fresh enough* for a bit, let's show it immediately and *then* quietly check for updates in the background."
-
-It's about providing instant gratification to your users while still ensuring they eventually get the absolute latest data. By default, data becomes stale instantly. But set `staleTime` to, say, 5 seconds, and your users experience buttery-smooth navigation. They see the data they expect, no spinner, and React Query works its magic behind the scenes. This small config is a game-changer for perceived performance and overall user happiness. Seriously, give it a thoughtful try.
-
-## 🖼️ Image Prompt
-A minimalist, professional developer-focused image with a dark background (#1A1A1A). In the center, abstract representations of React components form a subtle, interconnected tree structure, glowing softly with gold accents (#C9A227). Around this central structure, a conceptual, elegant clock-face or timer element is subtly integrated, also in gold, with a needle or a flowing gradient indicating the passage of time from "fresh" to "stale." Data flow lines, in a subtle gold, emanate from the React components towards this timer, illustrating the caching and revalidation process. The overall aesthetic is clean, sophisticated, and symbolizes data lifecycle management within a React application. No text, no logos.
-
-## 🐦 Expert Thread
-1/7 Tired of UI loading spinners flashing then disappearing? You might be missing the magic of `staleTime` in #ReactQuery. It's NOT just about performance; it's about delighting users with instant data. #ReactJS #WebDev
-
-2/7 `staleTime` tells React Query: "Keep this data fresh for X milliseconds." While fresh, any component requesting it gets it INSTANTLY from cache. No network, no spinner. Pure UX gold. ✨
-
-3/7 Here's the kicker: even after `staleTime` expires, React Query *still* serves the cached data instantly, THEN kicks off a background refetch. This "stale-while-revalidate" pattern is how you achieve buttery-smooth navigation.
-
-4/7 Don't confuse `staleTime` with `cacheTime`.
-`staleTime`: How long data is considered *fresh* for immediate display.
-`cacheTime`: How long inactive data stays in cache before *garbage collection*.
-Big difference, huge impact. #ReactQueryTips
-
-5/7 Example: `staleTime: 1000 * 5` for a product list. User navigates back within 5s? INSTANT display. After 5s? INSTANT display + background refetch. User never waits for initial data.
-
-6/7 For static data (e.g., app settings), `staleTime: Infinity` is your friend. But use it wisely! Applying it to dynamic data = users see old info. Context is everything.
-
-7/7 The default `staleTime: 0` is often the culprit for unnecessary loading states. A thoughtful `staleTime` strategy is an easy win for perceived performance. What's your go-to `staleTime` for common data types? #FrontendDev #Performance
-
-## 📝 Blog Post
 # React Query: What Is `staleTime` and Why Should You Care?
 
 Ever been working on a web app and felt like your data fetching was doing *too much* work? You know the drill: navigate to a list page, see a loading spinner. Click into a detail, another spinner. Go back to the list... *spinner again*. It's a classic scenario, and honestly, it can make even the snappiest apps feel sluggish. As developers, we often focus on making sure our data is always up-to-the-second fresh. But sometimes, "always fresh" comes at the cost of user experience.
