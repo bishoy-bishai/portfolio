@@ -1,42 +1,10 @@
-# REVIEW: 3 Vite Tricks I Wish I Knew When I Started
+---
+title: "3 Vite Tricks I Wish I Knew When I Started"
+description: "Unlocking Vite's Hidden Gems: 3 Tricks I Wish I Knew..."
+pubDate: "Mar 02 2026"
+heroImage: "../../assets/3-vite-tricks-i-wish-i-knew-when-i-started.jpg"
+---
 
-**Primary Tech:** Vite
-
-## 🎥 Video Script
-(Warm, confident tone, like talking over a coffee)
-
-Hey everyone! You know, when I first started using Vite, I was blown away by the speed. It felt like magic compared to the Webpack setups I’d wrestled with for years. I thought, "Okay, fast dev server, quick builds, I'm good." But honestly, I was barely scratching the surface.
-
-I remember this one project where we had a ton of dynamically loaded components and trying to manage all the imports was turning into a manual nightmare. I was looking for a more elegant way, almost gave up, and then stumbled upon `import.meta.glob`. It was an absolute "aha!" moment. It transformed how we approached dynamic loading, not just for components, but for routes, even test files. It instantly cut down on so much boilerplate.
-
-That’s just one example of the kind of hidden gems Vite offers. It’s not just about speed; it’s packed with intelligent design patterns that can genuinely simplify your workflow and make you a more effective developer. Stick around, because knowing these three tricks could seriously level up your Vite game and save you headaches on your next big project.
-
-## 🖼️ Image Prompt
-A dark, elegant, professional developer aesthetic (#1A1A1A background) with glowing gold accents (#C9A227). In the center, a stylized 'V' shape or a minimalist lightning bolt icon, subtly representing Vite's speed and efficiency. Emanating from this central Vite symbol, three distinct, abstract visual clusters:
-
-1.  **Glob Imports**: A network of interconnected, glowing file icons (e.g., small code snippets, component symbols) dynamically flowing together into a single, larger module icon. Representing automatic discovery and import.
-2.  **`import.meta.env`**: A secure, stylized lock icon glowing next to several distinct, colored data streams or blocks labeled "DEV", "PROD", and a generic "ENV" symbol, with a subtle barrier or filter indicating controlled access.
-3.  **Asset Handling (`?url`, `?raw`)**: A diverse set of file type icons (e.g., an image file, a text document, a JavaScript module symbol) transforming or projecting into different forms: one leading to a globe/URL icon, another to a block of plain text.
-
-The overall composition should feel dynamic, interconnected, and highly efficient, emphasizing smart automation and control. No text, no logos, just abstract, meaningful tech symbolism.
-
-## 🐦 Expert Thread
-1/ Vite changed the game with dev server speed, no doubt. But if you're *only* using it for speed, you're missing out. There are built-in superpowers that fundamentally reshape how you build. #ViteJS #WebDev
-
-2/ `import.meta.glob` is the real MVP. Ditch manual component imports for dynamic routes, lazy loading, and automated file discovery. It's a game-changer for reducing boilerplate. Seriously. ✨ #ViteTips #DeveloperExperience
-
-3/ Environment variables in Vite? Forget `process.env`. `import.meta.env` is your secure, client-side-aware best friend. Just remember the `VITE_` prefix and embrace mode-specific configs. Clean, safe, smart. #FrontendDev #ConfigManagement
-
-4/ Mastering assets with Vite goes beyond basic imports. Need a public URL for a Web Worker? `?url`. Want raw shader code as a string? `?raw`. These suffixes unlock deep control over your asset pipeline. Power features! #ViteTricks #AssetOptimization
-
-5/ These aren't just "tricks"; they're glimpses into Vite's opinionated, developer-first philosophy. They simplify complexity, improve performance, and make you ask: "Why didn't I know this sooner?!" #LearnVite #DevTools
-
-6/ What's *your* favorite lesser-known Vite feature or trick that completely changed your workflow? Share your wisdom! 👇 #CommunityDriven #Vite
-
-7/ Vite isn't just about faster builds; it's about smarter development. Are you leveraging its full potential, or just skimming the surface? The difference impacts everything.
-===
-
-## 📝 Blog Post
 # Unlocking Vite's Hidden Gems: 3 Tricks I Wish I Knew Sooner
 
 When Vite first burst onto the scene, it was a breath of fresh air. The "instant server start" and "lightning-fast HMR" became instant selling points, and for good reason. For many of us, myself included, it felt like magic after years of wrestling with sluggish Webpack builds. But here's the thing: while Vite's speed is its most celebrated feature, it's really just the tip of the iceberg.
