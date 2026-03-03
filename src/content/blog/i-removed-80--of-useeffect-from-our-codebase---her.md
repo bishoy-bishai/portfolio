@@ -1,31 +1,10 @@
-# REVIEW: I Removed 80% of useEffect From Our Codebase — Here's What Happened
+---
+title: "I Removed 80% of useEffect From Our Codebase — Here's What Happened"
+description: "The Great Un-effecting: How We Slashed 80% of useEffect from Our React..."
+pubDate: "Mar 03 2026"
+heroImage: "../../assets/i-removed-80--of-useeffect-from-our-codebase---her.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! You know that feeling when your `useEffect` hooks start multiplying, and suddenly your components look less like elegant UIs and more like tangled webs of side effects? Yeah, I’ve been there. For years, I just accepted it as "the React way." But then, on a particularly gnarly project, facing performance issues and subtle bugs, I had an "aha!" moment. I realized we were treating `useEffect` like a Swiss Army knife when it was really a very specialized tool.
-
-So, I took a deep breath, and with my team, we started a mission: remove `useEffect` wherever it wasn't strictly necessary. And what happened? We ended up slashing over 80% of them from our codebase! It wasn't just about deleting lines of code; it was a fundamental shift in how we thought about component lifecycle and data flow.
-
-Suddenly, our components became simpler, easier to reason about, and way more performant. Bugs that were elusive became obvious. It felt like shedding a heavy backpack. In this series, I'm going to walk you through *how* we did it, what alternatives we embraced, and share the key lessons learned. If your `useEffect` count is giving you nightmares, stick around – you’ll want to hear this.
-
-## 🖼️ Image Prompt
-A dark, professional background (#1A1A1A) with glowing gold accents (#C9A227). In the center, abstract representations of React's atomic components, perhaps as interconnected, glowing gold nodes, forming a simplified, clean, and elegant component tree structure. Surrounding some nodes are faint, broken orbital rings, symbolizing `useEffect`s that have been removed or simplified. Other nodes show clear, directional data flow arrows, highlighting efficiency and clarity without the visual clutter of multiple effects. A subtle speedometer or lightning bolt icon in the background, subtly integrated and glowing, hinting at performance gains. The overall aesthetic is minimalist, highly symbolic, and conveys a sense of clarity, efficiency, and advanced React development. No text or logos.
-
-## 🐦 Expert Thread
-1/x We removed 80% of `useEffect` calls from our React codebase. This wasn't a stunt; it was a necessary shift. `useEffect` is a powerful tool, but like a hammer, not everything is a nail. The complexity it often introduces is a hidden tax on developer velocity. #React #Frontend
-
-2/x The most common `useEffect` misuses? Data fetching and deriving internal state. If you're fetching data with `useEffect`, you're probably reinventing the wheel (badly). Libraries like React Query or SWR handle caching, revalidation, and errors far better. #WebDev
-
-3/x Stop updating state in `useEffect` just because another piece of state changed. If `total` needs to be `quantity * price`, calculate `total` directly in your render. Store only what *must* be stored. Compute what *can* be computed. #ReactHooks
-
-4/x `useEffect` is for synchronizing with the *outside world*: DOM manipulation, integrating non-React libraries, analytics pings. If your effect doesn't have a direct external dependency or a clear cleanup, question its existence. #CodeQuality
-
-5/x Our "un-effecting" mission led to significantly cleaner components, fewer bugs, and improved performance. The mental model shift is key: embrace declarative thinking and specialized tools instead of a `useEffect`-as-a-Swiss-Army-Knife approach. #SoftwareEngineering
-
-6/x If your `useEffect` dependency array feels like a minefield, or you're constantly battling stale closures, it's a sign. There's likely a more idiomatic React way. What's one `useEffect` you're going to challenge in your codebase this week? 🤔 #ReactDev
-
-## 📝 Blog Post
 # The Great Un-effecting: How We Slashed 80% of useEffect from Our React Codebase
 
 Alright, folks, let's be real. If you've been building React applications for a while, you've probably got a soft spot, or perhaps a mild trauma, for `useEffect`. It's that powerful hook we all learned early on, the one that lets us "do stuff" after render, sync with external systems, and generally escape the declarative world of React when we need to. But here's the thing: while `useEffect` is incredibly powerful, it's also incredibly easy to overuse and misuse.
