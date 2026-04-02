@@ -1,35 +1,10 @@
-# REVIEW: Your React App Is Probably Doing Too Much
+---
+title: "Your React App Is Probably Doing Too Much"
+description: "Your React App Is Probably Doing Too..."
+pubDate: "Apr 02 2026"
+heroImage: "../../assets/your-react-app-is-probably-doing-too-much.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! Ever felt like your React app is just… *tired*? Like it's constantly overthinking, rebuilding, or just plain sluggish, even for simple interactions? I've been there, more times than I'd like to admit.
-
-I remember one project, a relatively straightforward dashboard. We kept adding features, and each time, it felt like we were wrestling with something that should have been simple. We’d click a button, and the whole component tree seemed to re-render, data refetching in cascade. My "aha!" moment came when I realized we weren't just building features; we were inadvertently making our components responsible for *everything*. A single `UserTable` component was fetching data, filtering it, sorting it, managing its own pagination state, *and* rendering each row. It was a monolith trying to be a microservice!
-
-Here's the thing: React is incredibly powerful because of its simplicity and component model. But that power often leads us to make components do far more than they should. In my experience, the biggest performance and maintenance wins don't come from some exotic new library, but from asking a fundamental question: "Is this component, this hook, this bit of state, truly doing only what it *needs* to do?" Often, the answer is a resounding "no."
-
-So, the next time your app feels sluggish, or a bug is hard to track down, pause. Look at your components. Are they wearing too many hats? Your actionable takeaway today: simplify. Break down responsibilities. Your app—and your future self—will thank you.
-
-## 🖼️ Image Prompt
-A minimalist, professional developer-focused image with a dark background (#1A1A1A). In the center, a complex, tangled arrangement of glowing gold (#C9A227) orbital rings and interconnected nodes, symbolizing an over-engineered or overloaded React component. This central structure appears busy, with too many intersecting lines and small, chaotic data flow arrows, hinting at unnecessary re-renders and excessive responsibilities. To the side, in a subtle contrast, a much cleaner, more streamlined, and focused set of React-like orbital rings and nodes, also in gold, representing an optimized, single-responsibility component. This simpler structure has fewer, more deliberate connections and a sense of calm efficiency. No text, no logos, just abstract, elegant symbolism of React's component model and the concept of doing too much versus just enough.
-
-## 🐦 Expert Thread
-1/7 Is your React app silently groaning under its own weight? We often pile responsibilities onto components, turning them into monolithic beasts that are slow, buggy, and painful to maintain.
-
-2/7 It starts innocently. A small feature here, a convenient prop there. Soon, your `UserProfile` component is fetching data, managing edit forms, *and* displaying an avatar. That's 3-4 jobs, not one.
-
-3/7 **Rule #1: Single Responsibility Principle.** A component should have ONE reason to change. Extract data fetching into hooks, form management into its own component, and leave display to pure components. Your component trees will thank you.
-
-4/7 **State Discipline:** Stop storing derived state. `const fullName = `${firstName} ${lastName}`;` is almost always better than `useState(fullName)`. Less state to manage = fewer bugs & re-renders.
-
-5/7 **Memoization isn't a silver bullet.** Don't just slap `React.memo`, `useCallback`, `useMemo` everywhere. They have costs. Profile first! Identify hot paths with the React DevTools Profiler, then optimize *those* areas.
-
-6/7 Simpler React apps are happier React apps (and happier devs!). Focus on clarity of intent, explicit boundaries, and targeted optimization. It's about writing *smarter*, not just *less* code.
-
-7/7 What's one component in your codebase that you know is doing too much? What's the smallest, most impactful change you could make today to simplify its responsibilities? Share your insights!
-
-## 📝 Blog Post
 # Your React App Is Probably Doing Too Much
 
 We all start with the best intentions, right? A clean React component, a simple feature, maybe a `useState` hook, and a sprinkle of JSX. It's beautiful. It's fast. Then, bit by bit, through feature requests, refactors, and the natural evolution of a codebase, that elegant component starts to put on weight. Suddenly, it’s a tangled mess of props, local state, global state, unnecessary re-renders, and performance hogs. It’s not just slow; it’s a nightmare to debug and even harder to maintain.
