@@ -1,33 +1,10 @@
-# REVIEW: Implementing Dark Mode: CSS Variables, System Preference, and Persistence
+---
+title: "Implementing Dark Mode: CSS Variables, System Preference, and Persistence"
+description: "Demystifying Dark Mode: The Elegant Path with CSS Variables, System Preference, and..."
+pubDate: "Apr 07 2026"
+heroImage: "../../assets/implementing-dark-mode--css-variables--system-pref.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! Have you ever landed on a website at 2 AM, clicked a link, and been absolutely blinded by a sudden, jarring switch to a bright, white theme? We’ve all been there, right? Dark mode isn't just a trend; it's a critical accessibility and user experience feature that users genuinely appreciate.
-
-I remember when implementing themes felt like a tangled mess of Sass variables and `!important` overrides. It was a nightmare. But then CSS custom properties, or variables as we usually call them, landed. It was truly an "aha!" moment for me, realizing we could build truly dynamic, elegant themes right in the browser.
-
-Today, I want to quickly walk you through how we can leverage CSS variables to build a robust dark mode, respect your users' system preferences, and make sure their choice *sticks* across sessions. It's simpler than you think and drastically improves the user experience. The key? Embrace the platform's capabilities and let CSS do the heavy lifting. You'll walk away knowing exactly how to ditch the blinding flashes and give your users the control they expect.
-
-## 🖼️ Image Prompt
-A minimalist, professional image with a dark background (#1A1A1A) and gold accents (#C9A227). In the foreground, abstract representations of React's component hierarchy, with interconnected gold lines forming a loose component tree structure, some resembling atomic orbital rings. A central, prominent, yet subtle CSS variable `(--color-primary)` text is implied by a glowing golden dashed outline. To one side, a stylized sun/moon toggle icon, subtly shifting from light to dark. On the other side, an abstract representation of operating system preferences, like a faint, simplified gear icon overlaid with a subtle Mac/Windows/Linux-like motif, all rendered with gold outlines. Below, a small, subtle icon resembling a cookie or a simplified 'local storage' box, indicating persistence. The overall aesthetic is clean, developer-focused, and highlights the interplay between React components, dynamic styling, user preferences, and data persistence.
-
-## 🐦 Expert Thread
-1/7 Blinded by bright sites at 2 AM? 🌙 Users expect dark mode, but many implementations are clunky. The secret to elegant, performant theming? CSS Custom Properties (aka CSS variables). They're a game-changer. #DarkMode #CSS #WebDev
-
-2/7 Ditch the JS style manipulation! With `var(--my-color)` and a `[data-theme='dark']` attribute on `body`, you can swap entire color palettes with pure CSS. It's performant, maintainable, and remarkably simple. #CSSVariables #React #Frontend
-
-3/7 Crucial insight: Always respect `prefers-color-scheme`. Your users' OS already has a theme preference. Start there! Use `@media (prefers-color-scheme: dark)` as your baseline, then let user overrides take priority. User experience first. #Accessibility #UX
-
-4/7 Persistence is key. Once a user picks a theme, they expect it to stick. `localStorage` is your friend here. Store their choice and retrieve it on subsequent visits. But beware the FOUC (Flash Of Unstyled Content)!
-
-5/7 The dreaded FOUC? It happens when JS loads AFTER render, causing a brief flicker of the wrong theme. The fix: A tiny, blocking vanilla JS snippet in your `head` to set `data-theme` *before* React loads. Saves countless blinks! #Performance #DevTips
-
-6/7 Don't just swap colors. Consider shadows, borders, even image overlays for optimal contrast in dark mode. It's about comprehensive visual harmony, not just inverting hues. Think beyond `--color-text`.
-
-7/7 Dark mode done right combines CSS variables, system preference, and smart persistence. It's not just a feature; it's a testament to thoughtful, user-centric engineering. What's your biggest dark mode challenge? Let's discuss! #WebDevelopment #ReactDev #Engineering
-
-## 📝 Blog Post
 # Demystifying Dark Mode: The Elegant Path with CSS Variables, System Preference, and Persistence
 
 Every modern web application eventually faces the dark mode dilemma. It's no longer just a "nice-to-have"; users expect it, often as a fundamental part of their browsing experience. But how often have you seen dark mode implementations that feel clunky, suffer from a "flash of unstyled content" (FOUC), or completely disregard your OS-level preferences? It's a common struggle, and honestly, it used to be a source of frustration for me too.
