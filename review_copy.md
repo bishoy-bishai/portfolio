@@ -1,253 +1,210 @@
-# REVIEW: How We Ran Two Portals on the Same Domain During a React Migration (Without Users Noticing)
+# REVIEW: Stop Using Random Buttons: Use Button Groups for Clean UI
 
 **Primary Tech:** React
 
 ## 🎥 Video Script
-Hey there! Ever found yourself staring down a massive React migration, knowing you can’t just flip a switch? We've all been there. I remember a project where we had this beast of a legacy app, critical for business, but we were building its React 18 successor. The ask? Users absolutely *could not* see a single hiccup during the transition, even as they navigated between "old" and "new" parts of the product.
+Hey everyone! Ever found yourself staring at a UI, maybe a complex form or a dashboard, and noticing that all the buttons just… exist? Like they were sprinkled across the page without much thought for their neighbors? I’ve been there. In one project, we had literally dozens of `Button` components, each styled slightly differently, inconsistent spacing, and a maintenance nightmare.
 
-The traditional "server-side proxy" felt too clunky, causing full page reloads. Our "aha!" moment came when we realized we could create a tiny, client-side orchestrator. It sat at the very root of our `index.html`, making a lightning-fast decision: "Should I load the old app or the new one for this URL?" And the magic? When a user navigated from an old section to a new one, this orchestrator would *unmount* the old app and *mount* the new one into the *same DOM node*, all without a full page refresh. The user just saw a smooth, fast transition. It was like changing tires on a moving car!
-
-The takeaway? You don't need to break the bank or the user experience to migrate. A smart client-side orchestrator can give you incredible control and a truly seamless rollout.
+My "aha!" moment came when I realized we weren't just rendering buttons; we were rendering *actions*. And actions often come in sets. "Submit," "Cancel," "Save Draft" – these aren't lone wolves; they’re a pack. That's when I truly embraced button groups. Instead of thinking of them as individual `div`s with buttons inside, we started treating them as a single, cohesive unit. Suddenly, styling became consistent, spacing was a breeze, and our components felt so much cleaner. It's not just about aesthetics; it's about semantic organization and developer sanity. Stop letting your buttons wander; bring them home to a group. It’ll level up your UI, I promise.
 
 ## 🖼️ Image Prompt
-A minimalist, professional image on a dark background (#1A1A1A). The central theme is a seamless transition between two distinct, abstract user interface portals within a single, unified container. One portal on the left is represented by slightly older, more angular, and subdued UI elements (e.g., boxy cards, simpler lines). The portal on the right is represented by modern, sleek, and slightly more vibrant UI elements (e.g., rounded buttons, subtle gradients, more fluid shapes). These two portals are not separated by a hard line but rather blend or subtly overlap in the center, symbolizing a smooth migration. Orbiting and connecting these UI elements are abstract React atomic structures (circles, orbital rings, interconnected nodes), rendered with gold accents (#C9A227), emphasizing the React technology orchestrating the transition. The gold accents also highlight subtle animation lines or flow arrows indicating a dynamic swap or hand-off between the two portal styles. No text, no logos. The overall aesthetic should convey sophisticated engineering, controlled evolution, and an invisible underlying mechanism.
+A professional, developer-focused aesthetic with a dark background (#1A1A1A) and elegant gold accents (#C9A227). In the foreground, an abstract representation of a React component tree is subtly visible, with glowing gold lines connecting minimalist nodes. Centrally, a cohesive grouping of three abstract button shapes (rounded rectangles) is arranged horizontally, perfectly aligned and evenly spaced. These button shapes are subtly outlined in gold, with a soft gold internal glow, symbolizing unity and precision. Thin gold lines extend from this button group, connecting to the overall React component structure, visually implying that the group itself is a well-defined component within a larger system. The entire image conveys organization, clean structure, and a modern UI development approach, without any text or logos.
 
 ## 🐦 Expert Thread
-1/7 React migration dread? We’ve all been there: legacy app, shiny new tech, and the terrifying mandate: "no users noticing!" Traditional server-side proxies often mean full page reloads, a non-starter for true seamlessness. #ReactMigration #Frontend
+1/7 Ever look at a UI and just see a collection of random buttons floating around? No consistent spacing, no clear relation. It's the wild west of UI, and it leads to visual clutter & cognitive overhead. Your users deserve better. #React #UIUX
 
-2/7 Our "aha!" moment: a tiny, client-side orchestrator. This little hero loads *before* any React, quickly decides which app (old or new) should control the `#root` DOM element, then loads & mounts it. One app at a time, no conflicting React versions! #MicroFrontends #WebDev
+2/7 The solution? Stop rendering lone wolves. Embrace Button Groups. It’s not just about a `div` with `display: flex`. It’s a semantic shift. You're communicating "these actions belong together." #DesignSystems #FrontendDev
 
-3/7 The real magic? When navigating between old/new routes, this orchestrator *unmounts* the current app & *mounts* the other, all client-side. No full browser refresh. Users see a smooth transition, not a jarring page reload. It's like changing tires on a moving car! #UX #React
+3/7 Button Groups bring immediate benefits: visual cohesion, consistent spacing, and a HUGE win for accessibility with `role="group"` and `aria-label`. It drastically improves the UX for *all* users.
 
-4/7 This hot-swapping strategy isolates different React versions beautifully. React 16 vs React 18? No `Invalid hook call` nightmares, as only one React instance owns the `#root` at any given moment. Clean. Efficient. #ReactTips #Architecture
+4/7 In React, a simple `ButtonGroup` component can wrap your `Button` children, managing layout & spacing. Keep it focused: it's a layout primitive, not a state manager. Simple, clean, effective.
+```typescript
+<ButtonGroup spacing={12} ariaLabel="User actions">
+  <Button variant="primary">Edit</Button>
+  <Button variant="danger">Delete</Button>
+</ButtonGroup>
+```
 
-5/7 Pitfalls to watch: Cleanly unmount EVERYTHING (event listeners, global side effects). Manage CSS carefully to avoid leaks. Ensure robust routing logic. And don't forget lazy loading bundles for performance! #Performance #CodeQuality
+5/7 This isn't just aesthetic; it's a maintainability superpower. Change spacing or direction once in the group component, and every instance updates. Scalability baked right in. #ReactDev #CleanCode
 
-6/7 This approach enables incremental rollout, A/B testing, and feature flagging with surgical precision. It's not just a tech solution; it's a strategic business advantage for complex migrations. #ProductManagement #Engineering
+6/7 My lesson learned: Thinking in "groups of actions" rather than "individual buttons" fundamentally changes how you approach UI composition. It’s a small change with a massive impact on your component library's sanity.
 
-7/7 The takeaway: Don't fear the big rewrite. Master the art of the invisible handover. Your users (and your sanity) will thank you. What's been your most seamless migration trick? Share below! 👇 #FrontendDev #DevOps
+7/7 Are your buttons running wild, or are they part of a cohesive team? What's your favorite way to tame them? Let's build cleaner, more intentional UIs. #WebDev #UI
 
 ## 📝 Blog Post
-# The Invisible Handover: Running Two React Portals on the Same Domain During Migration
+# Stop Letting Your Buttons Wander: Embrace Button Groups for a Tidy UI
 
-Remember that feeling? You're tasked with modernizing a critical, sprawling web application. The business wants the shiny new tech, the users demand zero downtime, and your legacy codebase is clinging on for dear life. You can't just press pause, rewrite everything, and launch. That's a surefire way to chaos, unhappy users, and a very stressed team.
+As developers, we spend an incredible amount of time crafting user interfaces. We meticulously build components, manage state, and obsess over performance. Yet, I’ve found that one seemingly simple UI element often becomes a source of subtle chaos: the button.
 
-In a recent project, we faced this exact challenge. Our goal was to migrate a significant application from an aging frontend stack (let's just call it "Legacy React" for simplicity, perhaps React 16 or earlier) to a new, fully modern React 18 codebase. The crucial constraint: users needed to navigate between "old" and "new" sections of the product *without ever noticing a full page refresh*. We had to run two distinct "portals" on the same domain, seamlessly handing off control.
+Think about it. How many times have you dropped a `Button` component into a form, then another, then another for different actions? It’s easy, right? Just `<div><Button/><Button/><Button/></div>`. But left unchecked, this "random button" approach quickly leads to a UI that feels disjointed, inconsistent, and frankly, a bit messy. Buttons misalign, spacing varies, and the user's eye has to work harder to understand related actions.
 
-This isn't just about technical elegance; it's about business continuity and user experience. A clumsy migration with jarring page reloads or broken functionality can erode user trust faster than you can say "bug report." The "strangler fig" pattern came to mind, but we needed a client-side rendition that gave us granular control.
+Here's the thing: most buttons aren't solitary. They're part of a dialogue, a set of choices, or a sequence of actions. "Submit" and "Cancel" almost always appear together. "Edit," "Delete," and "Archive" often live side-by-side. Recognizing this inherent relationship is the first step towards a cleaner, more intuitive UI through the power of **button groups**.
 
-## The Core Idea: Client-Side Orchestration with App Hot-Swapping
+## Why Button Groups Aren't Just a "Nice-to-Have"
 
-Many approaches to migrating large applications involve server-side proxies, where Nginx or a similar service routes requests to either the old or new application based on the URL. While effective, this often results in full page reloads when crossing the boundary between the two apps. For our "without users noticing" requirement, that was a non-starter.
+When I first started seriously thinking about design systems, I realized that button groups were more than just a visual arrangement. They represent a fundamental shift in how we think about UI actions.
 
-The solution we landed on was a client-side orchestrator: a small, non-React JavaScript module loaded *before* anything else. Its job was simple yet powerful: determine which full application (the new React 18 one or the old React app) should control the `#root` DOM element, then load and mount it. When the user navigated to a different section, this orchestrator would gracefully *unmount* the currently active application and *mount* the other one, all client-side, avoiding a browser-initiated full page refresh.
+1.  **Visual Cohesion:** This is the most obvious benefit. A button group ensures consistent spacing, alignment, and often, even shared styles (like a common size or variant) for related actions. The UI instantly looks more polished and professional.
+2.  **Improved User Experience:** When buttons are visually grouped, users immediately understand that these actions are related. This reduces cognitive load, speeds up decision-making, and makes the interface more predictable.
+3.  **Enhanced Accessibility:** Properly implemented button groups can provide better context for assistive technologies. Using semantic HTML and ARIA attributes (like `role="group"` and `aria-label`) helps screen readers convey that these are related controls.
+4.  **Simplified Maintenance:** Instead of tweaking individual button styles or layouts across dozens of components, you modify the `ButtonGroup` wrapper. This is a game-changer for large applications and evolving design systems.
+5.  **Easier Responsiveness:** A well-designed button group can handle responsiveness gracefully, perhaps stacking vertically on smaller screens, ensuring your actions remain usable no matter the device.
 
-Here's the thing: running two separate React instances, especially with different major versions (e.g., React 16 and React 18), directly on the same DOM tree is a recipe for disaster. You'll run into `Invalid hook call` errors, context provider conflicts, and general mayhem. Our approach circumvented this by ensuring only *one* React application was actively mounted to the main `#root` element at any given time. We were performing an application hot-swap.
+## Crafting Your Own `ButtonGroup` in React (with TypeScript)
 
-## Setting Up the Ecosystem
+Let's dive into some practical code. The core idea is to create a wrapper component that manages the layout and spacing of its button children.
 
-Let's break down the technical setup.
-
-### 1. The Universal `index.html`
-
-First, we needed a single `index.html` file that both applications could live under. It would contain the root `div` for our applications and then immediately load our orchestrator script.
-
-```html
-<!-- public/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Product</title>
-    <!-- Include any global CSS that should apply to both apps (use sparingly) -->
-</head>
-<body>
-    <div id="root"></div>
-    <!-- The orchestrator is loaded first and controls which app initializes -->
-    <script src="/orchestrator.js"></script>
-</body>
-</html>
-```
-
-### 2. The Mighty Orchestrator
-
-This `orchestrator.js` file is the brain. It's plain JavaScript (or TypeScript compiled down), so no React version conflicts here. Its primary responsibilities:
-*   Dynamically load the correct application's JavaScript bundle.
-*   Mount the selected application.
-*   Unmount the previous application cleanly.
-*   Listen for route changes (e.g., `popstate` events) to decide if an app swap is needed.
+First, let's assume you have a basic `Button` component in your design system.
 
 ```typescript
-// orchestrator.ts
-// We'll need to declare our global mount/unmount functions
-declare global {
-  interface Window {
-    mountNewApp: (root: HTMLElement) => void;
-    unmountNewApp: (root: HTMLElement) => void;
-    mountLegacyApp: (root: HTMLElement) => void;
-    unmountLegacyApp: (root: HTMLElement) => void;
-    navigateTo: (path: string) => void; // A helper for internal navigation
-  }
-}
-
-const rootElement = document.getElementById('root')!;
-let currentApp: 'new' | 'legacy' | null = null;
-let currentUnmountFn: ((root: HTMLElement) => void) | null = null;
-
-// Utility to dynamically load a script
-const loadScript = async (src: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => resolve();
-        script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
-        document.head.appendChild(script); // Append to head or body
-    });
-};
-
-// Determines which app should handle the given path
-const getAppForPath = (path: string): 'new' | 'legacy' => {
-    // This is where your migration strategy lives:
-    // - Based on URL prefixes: e.g., /legacy/* vs /new/*
-    // - Feature flags: localStorage.getItem('newAppEnabled') === 'true'
-    // - User segments, A/B tests, etc.
-    if (path.startsWith('/legacy') || localStorage.getItem('useLegacyApp') === 'true') {
-        return 'legacy';
-    }
-    return 'new'; // Default to the new app
-};
-
-const renderApp = async (appType: 'new' | 'legacy', path: string) => {
-    if (currentUnmountFn) {
-        // Unmount the current app cleanly
-        currentUnmountFn(rootElement);
-        // Ensure the DOM is completely clear before mounting the next app
-        while (rootElement.firstChild) {
-            rootElement.removeChild(rootElement.firstChild);
-        }
-    }
-
-    // Dynamically load and mount the chosen app
-    if (appType === 'new') {
-        if (!window.mountNewApp) { // Load bundle only if not already loaded
-            await loadScript('/static/js/new-app.bundle.js');
-        }
-        window.mountNewApp(rootElement);
-        currentUnmountFn = window.unmountNewApp;
-    } else { // 'legacy'
-        if (!window.mountLegacyApp) {
-            await loadScript('/static/js/legacy-app.bundle.js');
-        }
-        window.mountLegacyApp(rootElement);
-        currentUnmountFn = window.unmountLegacyApp;
-    }
-
-    currentApp = appType;
-    // Update the browser's URL without a full page reload
-    history.pushState(null, '', path);
-};
-
-// Initial render when the page first loads
-renderApp(getAppForPath(window.location.pathname), window.location.pathname);
-
-// Handle browser's back/forward buttons
-window.addEventListener('popstate', () => {
-    const newAppType = getAppForPath(window.location.pathname);
-    if (newAppType !== currentApp) {
-        renderApp(newAppType, window.location.pathname);
-    } else {
-        // If the same app is supposed to be active, let its internal router handle the path change.
-        // A more robust implementation might explicitly call the current app's router navigate method.
-    }
-});
-
-// Provide a global navigation API for apps to request route changes
-window.navigateTo = (path: string) => {
-    const newAppType = getAppForPath(path);
-    if (newAppType !== currentApp) {
-        // If switching apps, trigger a full unmount/mount cycle
-        renderApp(newAppType, path);
-    } else {
-        // If staying within the same app, just update history and let its internal router react
-        history.pushState(null, '', path);
-    }
-};
-```
-
-### 3. Exposing Mount/Unmount Functions from Each Application
-
-Each of your React applications (new and legacy) needs to be built in a way that exposes global functions for the orchestrator to call. This means modifying their entry points.
-
-```typescript
-// new-app/src/index.tsx (React 18 example)
+// components/Button.tsx
 import React from 'react';
-import { createRoot, Root } from 'react-dom/client';
-import App from './App'; // Your main React app component
 
-let rootInstance: Root | null = null;
-
-// Expose mount and unmount globally
-if (typeof window !== 'undefined') {
-  window.mountNewApp = (element: HTMLElement) => {
-    if (!rootInstance) {
-      rootInstance = createRoot(element); // Use createRoot for React 18
-    }
-    rootInstance.render(
-      <React.StrictMode>
-        <App /> {/* Your actual React 18 application */}
-      </React.StrictMode>
-    );
-  };
-
-  window.unmountNewApp = (element: HTMLElement) => {
-    if (rootInstance) {
-      rootInstance.unmount(); // Cleanly unmount the React 18 app
-      rootInstance = null;
-    }
-  };
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
+  size?: 'small' | 'medium' | 'large';
+  children: React.ReactNode;
 }
+
+const Button: React.FC<ButtonProps> = ({
+  variant = 'primary',
+  size = 'medium',
+  children,
+  className = '',
+  ...props
+}) => {
+  const baseStyles = 'rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2';
+  
+  const variantStyles = {
+    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
+    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400',
+    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-200',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+  };
+
+  const sizeStyles = {
+    small: 'px-3 py-1.5 text-sm',
+    medium: 'px-4 py-2 text-base',
+    large: 'px-6 py-3 text-lg',
+  };
+
+  return (
+    <button
+      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Button;
 ```
+
+Now, let's build our `ButtonGroup` component. It's surprisingly simple yet incredibly effective. We'll use CSS Flexbox (or Tailwind CSS classes for brevity here) to handle the layout.
 
 ```typescript
-// legacy-app/src/index.tsx (React 16/17 example)
+// components/ButtonGroup.tsx
 import React from 'react';
-import ReactDOM from 'react-dom'; // Use ReactDOM for older React versions
-import LegacyApp from './LegacyApp'; // Your old React app component
 
-if (typeof window !== 'undefined') {
-  window.mountLegacyApp = (element: HTMLElement) => {
-    ReactDOM.render(
-      <React.StrictMode>
-        <LegacyApp /> {/* Your actual legacy React application */}
-      </React.StrictMode>,
-      element
-    );
-  };
-
-  window.unmountLegacyApp = (element: HTMLElement) => {
-    ReactDOM.unmountComponentAtNode(element); // Unmount for older React versions
-  };
+interface ButtonGroupProps {
+  children: React.ReactNode;
+  direction?: 'row' | 'column'; // How the buttons are arranged
+  spacing?: number; // Gap between buttons in pixels
+  className?: string; // Optional custom classes for the container
+  ariaLabel?: string; // For accessibility
 }
+
+const ButtonGroup: React.FC<ButtonGroupProps> = ({
+  children,
+  direction = 'row',
+  spacing = 8,
+  className = '',
+  ariaLabel,
+}) => {
+  return (
+    <div
+      role="group" // Important for accessibility: indicates a group of related elements
+      aria-label={ariaLabel} // Provides a descriptive label for assistive technologies
+      className={`flex ${direction === 'row' ? 'flex-row' : 'flex-col'} ${className}`}
+      style={{ gap: `${spacing}px` }} // Use CSS gap property for consistent spacing
+    >
+      {children}
+    </div>
+  );
+};
+
+export default ButtonGroup;
 ```
 
-## Key Insights and What Most Tutorials Miss
+And here’s how you'd use it in your application:
 
-1.  **React Version Isolation:** The hot-swapping strategy elegantly solves React version conflicts. Since only one React app is active and managing the DOM at `#root` at any given time, their respective versions of `React`, `ReactDOM`, and hooks don't clash. This is, in my experience, the biggest headache in micro-frontend architectures trying to run multiple Reacts on the *same DOM tree*.
-2.  **CSS Management:** Even with app hot-swapping, global CSS from one app can leak into the other during the brief loading period or if not carefully scoped. We found robust CSS methodologies (like CSS Modules, BEM, or PostCSS with scoped variables) were critical. Global resets or utility classes need to be managed carefully or externalized to the `index.html`.
-3.  **Global Event Bus for Communication:** Since the applications are distinct and swapped, they can't directly share React Context or Redux stores. For rare, necessary communication (e.g., user login status, theme preference), a simple global event bus (`CustomEvent` or a tiny library) proved invaluable.
-4.  **Performance & Bundle Splitting:** Lazy loading of app bundles (as shown with `loadScript`) is crucial. You don't want to load both a new and a legacy app bundle on initial page load if only one is needed. Aggressive code splitting within each app also helps keep the initial load fast.
-5.  **A/B Testing & Rollout:** This architecture is perfect for controlled rollouts. The `getAppForPath` logic can integrate with feature flagging systems, allowing you to gradually expose the new app to different user segments, or even A/B test specific legacy vs. new pages.
+```typescript
+// components/UserProfileActions.tsx
+import React from 'react';
+import Button from './Button';
+import ButtonGroup from './ButtonGroup';
+
+const UserProfileActions: React.FC = () => {
+  const handleDeleteUser = () => console.log('Deleting user...');
+  const handleEditProfile = () => console.log('Editing profile...');
+  const handleMessageUser = () => console.log('Messaging user...');
+
+  return (
+    <div className="p-6 bg-white shadow rounded-lg">
+      <h2 className="text-xl font-bold mb-4">User Actions</h2>
+      <ButtonGroup spacing={12} ariaLabel="User profile management actions">
+        <Button variant="primary" onClick={handleEditProfile}>
+          Edit Profile
+        </Button>
+        <Button variant="secondary" onClick={handleMessageUser}>
+          Message
+        </Button>
+        <Button variant="danger" onClick={handleDeleteUser}>
+          Delete User
+        </Button>
+      </ButtonGroup>
+
+      <h2 className="text-xl font-bold mt-8 mb-4">Form Actions</h2>
+      <form onSubmit={(e) => { e.preventDefault(); console.log('Form submitted'); }}>
+        {/* ... form fields here ... */}
+        <div className="mt-6 flex justify-end"> {/* Example of aligning group */}
+          <ButtonGroup spacing={10} ariaLabel="Form submission controls">
+            <Button type="button" variant="outline" onClick={() => console.log('Saving draft')}>
+              Save Draft
+            </Button>
+            <Button type="button" variant="secondary" onClick={() => console.log('Cancelling')}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary">
+              Submit Form
+            </Button>
+          </ButtonGroup>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default UserProfileActions;
+```
+
+Notice how `ButtonGroup` simply wraps its children. It doesn't try to manipulate the children's props directly (e.g., forcing all buttons to be `small`), which can lead to tricky prop-drilling or unexpected behavior. Instead, it focuses on its primary responsibility: **managing the layout and spatial relationship** of its contained elements. If you need a common `size` or `variant`, it's clearer to pass those props directly to each `Button` or create a more specialized component (e.g., `SaveCancelButtonGroup`).
+
+## Insights Most Tutorials Miss
+
+*   **Beyond Visuals: The Semantic Layer:** The `role="group"` and `aria-label` attributes are critical for accessibility. Don't skip them! They communicate to screen readers that these are related interactive elements, improving navigation and comprehension for users with disabilities.
+*   **Composability is King:** Our `ButtonGroup` is incredibly simple, and that's its strength. It’s a dedicated layout primitive. Avoid making it do too much. If you find yourself needing to share state or complex logic *between* buttons in a group (e.g., a toggle group where only one button can be active), that’s likely a sign for a more specialized component, like a `RadioGroup` or `SegmentedControl`, which might *internally* use `ButtonGroup` for layout but adds its own logic.
+*   **Context for Readability:** When a `ButtonGroup` is used, the intent of the UI becomes clearer at a glance. "Here are the actions you can take *for this specific section*." It provides visual and semantic context that individual, scattered buttons simply can’t.
 
 ## Pitfalls to Avoid
 
-*   **Global Variables & Side Effects:** Be extremely mindful of what each app does to the `window` or `document` globally. Clean up event listeners, timers, and any injected DOM elements during `unmount`.
-*   **Routing Inconsistencies:** Ensure your `getAppForPath` logic is robust and covers all permutations. Ambiguous routes can lead to unexpected app swaps or broken navigation. Both apps should ideally use client-side routers (like React Router) that handle paths *within* their own scope.
-*   **Flickering During Swap:** While much faster than a full page reload, there's a brief moment during unmount and re-mount where the `#root` element might be empty. Strategic use of minimal global CSS for loading spinners or a skeleton screen can mask this, or pre-render a basic shell for the new app server-side to hide the initial load.
-*   **Over-reliance on `localStorage` / `sessionStorage`:** While useful for basic flags, don't use it for sensitive or critical data transfer between apps, as it's not secure or reactive.
+1.  **Over-grouping:** Not every button needs to be in a group. If two buttons are completely unrelated in function or context, forcing them into a `ButtonGroup` can actually confuse users. Use them judiciously for genuinely related actions.
+2.  **Ignoring Button Types:** Remember to set `type="button"` for buttons that are *not* intended to submit a form, especially within a form context. Otherwise, they might inadvertently trigger a form submission. The `submit` button should explicitly have `type="submit"`.
+3.  **Complex Prop Sharing (the `React.cloneElement` trap):** While `React.cloneElement` can be used to inject props into children, it often leads to less predictable code, especially with TypeScript. It can override props unintentionally and make debugging harder. For a general `ButtonGroup`, it's usually best to let the children manage their own specific props, focusing the `ButtonGroup` on layout.
 
-## The Payoff: An Invisible Transition
+## Elevate Your UI, One Group at a Time
 
-This hot-swapping strategy enabled us to incrementally migrate our application feature by feature, route by route. Users would click a link, and based on our orchestrator's logic, they might seamlessly transition from an old React 16 component to a new React 18 component, or vice-versa, without a single browser refresh. The experience was truly fluid, and the engineering team could tackle the migration in manageable chunks, deploying frequently and with confidence.
+Adopting button groups might seem like a small change, but its impact on UI cleanliness, maintainability, and user experience is profound. It's a hallmark of a thoughtful, mature approach to frontend development. By consciously organizing your interactive elements, you're not just making things look better; you're making them work better for everyone.
 
-It's a testament to the power of thoughtful frontend architecture. By carefully isolating concerns and orchestrating the user's journey, we turned a daunting migration into a smooth, almost invisible evolution.
+So, next time you reach for that lone `Button` component, pause and ask yourself: "What other actions is this button related to?" Chances are, it's begging for a group. Go forth and tame those wild buttons! Your UIs (and your colleagues) will thank you.
