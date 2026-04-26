@@ -1,0 +1,19 @@
+# REVIEW: How React + Vite Actually Works Behind the Scenes Breakdown
+
+**Primary Tech:** Vite
+
+## 🎥 Video Script
+Alright, grab a coffee. Ever wonder why your React app with Vite screams to life in milliseconds, while your old projects sometimes felt like they were still on dial-up? I remember spending what felt like half my morning waiting for Webpack to bundle a complex app just to get HMR working. It was soul-crushing. My 'aha' moment with Vite wasn't just how fast it was, but *why*.
+
+Here’s the thing: Vite isn’t magic, it’s brilliant engineering leveraging modern browser capabilities. Instead of bundling your entire application code during development, Vite serves native ES Modules directly. Your browser handles the imports! For `node_modules`, it uses `esbuild` for super-fast pre-bundling into single-file ESM, making sure those heavy dependencies load efficiently.
+
+The actionable takeaway? Understanding this core principle – native ESM in development, `esbuild` for dependencies, and `Rollup` only for production – isn't just trivia. It’ll empower you to troubleshoot faster, optimize builds like a pro, and genuinely elevate your development experience. You'll stop fighting your build tool and start leveraging it.
+
+## 🖼️ Image Prompt
+A minimalist, professional image with a dark background (#1A1A1A) and glowing gold accents (#C9A227). In the center, a stylized, abstract "V" symbol for Vite, infused with a subtle lightning bolt graphic, representing speed and efficiency. Surrounding the "V" are interconnected, gold-outlined geometric shapes symbolizing React components forming a component tree. Fast, directional arrows, glowing in gold, flow from these components towards browser window outlines, depicting native ESM (ECMAScript Modules) being served directly. In the background, abstract nodes and lines represent a dependency graph, with a few nodes having a faint, rapid shimmer, indicating esbuild's quick pre-bundling. A subtle, quick circular arrow motif in gold suggests Hot Module Replacement (HMR). The overall aesthetic is clean, sophisticated, and conveys high-performance web development.
+
+## 🐦 Expert Thread
+Missing
+
+## 📝 Blog Post
+Missing
