@@ -1,29 +1,10 @@
-# REVIEW: I Stopped Letting GitHub Copilot Invent My React Standard. Here Is What I Did Instead.
+---
+title: "I Stopped Letting GitHub Copilot Invent My React Standard. Here Is What I Did Instead."
+description: "I Stopped Letting GitHub Copilot Invent My React Standard. Here Is What I Did Instead."
+pubDate: "May 01 2026"
+heroImage: "../../assets/i-stopped-letting-github-copilot-invent-my-react-s.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-(Scene: Casual office setting, two developers talking over coffee. Narrator speaks directly to the camera with a warm, confident smile.)
-
-"Hey everyone! So, you know how amazing GitHub Copilot is, right? It's like having a hyper-intelligent pair programmer. I absolutely love it for boilerplate, complex regex, even just remembering that obscure utility function. But I had a bit of an 'aha!' moment recently, and it was pretty eye-opening.
-
-I noticed our team's React codebase was subtly drifting. Not in a bad way, necessarily, but in an inconsistent way. Copilot was brilliant at completing *a* component, *a* hook, *a* folder structure. But it didn't know *our* team's specific naming conventions, *our* agreed-upon `src/features` architecture, or *our* particular way of handling prop drilling. It was giving us *a* solution, not *the* solution that aligned with our established, or sometimes *unestablished*, standards.
-
-It hit me: Copilot is an incredible *accelerator*, but it's not a *standard-setter*. If we wanted a truly cohesive, scalable React application, we, the humans, needed to define that standard first. Our actionable takeaway? We stopped letting AI *invent* our architecture and started using it to *enforce* and *speed up* our human-defined best practices. It's made a world of difference in clarity and team velocity."
-
-## 🖼️ Image Prompt
-A minimalist, elegant image with a dark background (#1A1A1A) and gold accents (#C9A227). In the center, a stylized React atom structure with glowing gold orbital rings is visible, but subtly overlaid with blueprint-like grid lines and architectural schematics. Abstract representations of interconnected React components are arranged in a clear, hierarchical tree structure, with gold lines tracing logical data flow and parent-child relationships, symbolizing a well-defined standard. A single, subtle human hand outline (gold glow) is positioned as if guiding or drawing the structured component tree, emphasizing human intent and design over purely AI-generated patterns. Floating gold symbols of hooks (a sleek, abstract hook shape) and props (small, labeled connecting nodes) are integrated into the structure, denoting specific React concepts being standardized. The overall aesthetic is professional, technical, and conveys clarity, structure, and human-led design in a complex system.
-
-## 🐦 Expert Thread
-1.  GitHub Copilot is amazing for productivity, but I realized it was subtly eroding our team's React standard. It offers *a* solution, not *our* agreed-upon pattern. That's when we changed our approach. #React #FrontendDev #CodeQuality
-2.  Your React codebase feeling inconsistent despite AI assistance? Copilot accelerates, but doesn't *invent* your team's specific architecture. We stopped letting it implicitly define our standards. #AIEngineering #DevTools
-3.  Our solution? We explicitly defined our React standard: folder structure, component patterns (compound, presentational), naming conventions, TypeScript prop rules. Now, Copilot *accelerates* our *human-defined* standard. Huge win! #TypeScript #ReactStandards
-4.  Consistency in React isn't about rigid rules; it's about reducing cognitive load. When everyone knows "the way," focus shifts from syntax to solving complex problems. Hello, increased velocity! #SoftwareEngineering #TeamProductivity
-5.  Don't just list rules; document the *why* behind your React standards. Understanding the rationale fosters buy-in and makes your standard a living guide, not a forgotten mandate. #TechLeadership #BestPractices
-6.  The biggest pitfall? Over-engineering your standard too early or not involving the team. Start small, iterate, and adapt. A good standard evolves with your project. #DevTips #ReactCommunity
-7.  What's one React standard your team implemented that significantly improved your dev workflow or code quality? Share your go-to patterns! 👇 #ReactDev #CodeStandards
-
-## 📝 Blog Post
 # I Stopped Letting GitHub Copilot Invent My React Standard. Here Is What I Did Instead.
 
 Let's be honest, GitHub Copilot is magic. It's like having a coding wizard peering over your shoulder, anticipating your next move, sometimes even reading your mind. For repetitive tasks, boilerplate, or just speeding through a tricky algorithm, it's an unparalleled productivity booster. I've found myself marveling at its suggestions countless times.
