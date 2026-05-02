@@ -1,33 +1,10 @@
-# REVIEW: How React Works (Part 2)? Why React Had to Build Its Own Execution Engine
+---
+title: "How React Works (Part 2)? Why React Had to Build Its Own Execution Engine"
+description: "Decoding React's Engine: Why It Built Its Own..."
+pubDate: "May 02 2026"
+heroImage: "../../assets/how-react-works--part-2---why-react-had-to-build-i.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Alright team, grab a coffee. Ever wondered what’s *really* happening behind the scenes when your React app updates? We all know `setState` triggers a re-render, but for a long time, I just treated that as magic. Components just… updated. But I remember hitting a gnarly performance bottleneck on a high-traffic dashboard; things felt sluggish. Just knowing *what* to do wasn't enough; I needed to know *how* React actually orchestrated those updates.
-
-Here’s the thing: browsers weren't built for the dynamic, highly interactive UIs we demand today. Manipulating the DOM directly is slow and blocking. So, React had a big problem to solve: how do you keep the UI buttery smooth, even when lots of data is changing? The answer wasn't to just use the browser’s existing tools better, but to build its *own* sophisticated execution engine – what we now call the Fiber reconciler. It allows React to pause, prioritize, and resume work, all while keeping the main thread free.
-
-Understanding this isn't just academic. It’s a superpower. Knowing about the render and commit phases, and how Fiber manages work, empowers you to debug performance issues, write more efficient code, and truly leverage React's strengths. It transforms you from a user of a framework into someone who understands its very foundation.
-
-## 🖼️ Image Prompt
-A minimalist, professional developer-focused image with a dark background (#1A1A1A) and glowing gold accents (#C9A227). The central element is an abstract representation of a React component tree, perhaps with interconnected nodes and subtle orbital rings suggesting atomic structures. These components are feeding into a series of stylized gears or cogs, symbolizing an "execution engine." Gold arrows or lines indicate data flow and processing within this engine. Below or beside the engine, two abstract, tree-like structures (representing the Virtual DOM and the Real DOM) are shown, with a subtle golden "diff" or comparison effect highlighting changes between them. The overall aesthetic is clean, elegant, and conveys complex processing and internal mechanics without being overly literal. No text or logos.
-
-## 🐦 Expert Thread
-1/7: Many devs stop at "Virtual DOM." But the *real* magic in React, the part that keeps your UI buttery smooth, is its custom execution engine: Fiber. It's why React can feel so performant even on complex apps. #React #Frontend
-
-2/7: Here's the thing: browser DOM manipulation is slow and blocking. React couldn't achieve its performance goals just by wrapping browser APIs. It needed to take control of *when* and *how* updates happen. #WebDev #Performance
-
-3/7: Fiber enables "cooperative scheduling." Imagine React pausing a heavy update, letting the browser handle user input (like typing!), then resuming the update. That's not magic, it's deliberate engineering to prevent jank. #ReactFiber
-
-4/7: This ability to pause & resume work (the Render Phase) is what allows React to prioritize. Urgent UI updates first, then the deferred, less critical work. Without Fiber, JavaScript's single thread would be a constant bottleneck. #JavaScript #UIUX
-
-5/7: Pitfall: Thinking `setState` instantly updates the DOM. It just *schedules* an update. React's engine then decides when to process it, reconcile, and finally commit the changes. Embrace the async nature! #ReactTips
-
-6/7: Understanding Fiber unlocks better debugging and optimization. Why `useEffect` vs `useLayoutEffect`? Why `useTransition`? It all ties back to React's two-phase render-commit engine. It's the architecture that makes hooks powerful. #Hooks
-
-7/7: React didn't just build a UI library; it built its own operating system for rendering UIs. What implications does this level of control have for future web frameworks? Think about it. #FrontendEngineering #ReactDev
-
-## 📝 Blog Post
 # Decoding React's Engine: Why It Built Its Own Scheduler
 
 Ever built a React app that, despite all your best efforts, just *felt* a little… janky? Maybe a complex animation stutters, or a rapid state update feels less than immediate. We've all been there. It’s frustrating when you know you’re using a "fast" framework, yet the user experience isn't quite buttery smooth. The truth is, sometimes the bottleneck isn't your code logic, but a fundamental challenge React faces when interacting with the browser itself.
