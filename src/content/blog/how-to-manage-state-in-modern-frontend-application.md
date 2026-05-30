@@ -1,33 +1,10 @@
-# REVIEW: How to manage state in modern frontend applications — a practical guide
+---
+title: "How to manage state in modern frontend applications — a practical guide"
+description: "Untangling the Web: A Human Guide to State Management in Modern React..."
+pubDate: "May 30 2026"
+heroImage: "../../assets/how-to-manage-state-in-modern-frontend-application.jpg"
+---
 
-**Primary Tech:** React
-
-## 🎥 Video Script
-Hey everyone! Ever felt like your state management strategy was less of a well-oiled machine and more of a tangled ball of yarn? I certainly have. I remember this one project where every new feature felt like pulling a loose thread, causing bugs to unravel in completely unrelated parts of the application. It was a debugging nightmare, a true testament to how quickly an unmanaged state can spiral out of control.
-
-We were chasing every new library, trying to find "the one," only to realize we were missing the forest for the trees. The "aha!" moment for us was understanding that it’s not about finding a magic bullet, but about making deliberate, informed choices based on the *scope* and *nature* of your state.
-
-The core takeaway? Start simple. Really simple. Don't reach for the most complex tool first. Understand local state, then context, and only then evaluate if a full-blown library truly solves a persistent problem you're facing. It's about being strategic, not just reactive.
-
-## 🖼️ Image Prompt
-A minimalist, professional developer-focused aesthetic. Dark background #1A1A1A with elegant gold accents #C9A227. In the center, abstract representations of React's component tree structure, subtly glowing gold, with an atom-like core subtly radiating a warm light. Interconnected nodes (representing React components) are linked by smooth, golden data flow arrows, illustrating the movement of state. Some nodes show a lighter, more focused glow to signify local state, while others are connected by broader, more prominent golden streams symbolizing global state or context. The entire composition should convey dynamic data flow and interconnectedness without being overly complex. No text, no logos.
-
-## 🐦 Expert Thread
-1/7 State management in frontend apps isn't about finding a magic library. It's about building a solid mental model. Start with `useState`. Seriously, master it. It covers more ground than you think. #React #Frontend
-
-2/7 Prop drilling isn't inherently evil. It's a signal. When passing props down becomes genuinely painful, *then* consider React Context. Context is amazing for "read-only" global values like themes or user info.
-
-3/7 When Context isn't enough, don't automatically reach for Redux. Modern, minimalist libraries like Zustand or Jotai offer incredible dev experience with far less boilerplate for common global state needs. #StateManagement
-
-4/7 The unsung hero of efficient state management? Derived state! Don't store what you can compute. `useMemo` is your friend for optimizing expensive calculations from existing state. Keep your state minimal. #ReactHooks
-
-5/7 Biggest state management pitfall: premature abstraction. Don't adopt a complex solution for a problem you *might* have. Solve the problem you have today. Complexity costs.
-
-6/7 Think about state colocation. Keep state as close as possible to where it's used. Only lift it higher when multiple components *truly* need access. This dramatically simplifies reasoning and debugging.
-
-7/7 What's one piece of state management advice you wish you knew earlier in your career? Share your "aha!" moment! 👇 #FrontendDev #WebDev
-
-## 📝 Blog Post
 # Untangling the Web: A Human Guide to State Management in Modern React Applications
 
 Remember that feeling when you first started building a non-trivial frontend application? You're cruising along, `useState` is your best friend, and life is good. Then, slowly but surely, your component tree grows, data needs to be shared across deeply nested components, and suddenly, that calm, serene river of local state turns into a chaotic delta of prop drilling, duplicated logic, and unexpected side effects. Sound familiar? I've been there, more times than I care to admit.
