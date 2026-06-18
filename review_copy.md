@@ -1,261 +1,236 @@
-# REVIEW: AI Doesn’t Need to Be Right. It Only Needs to Sound Procedural
+# REVIEW: Next.js 15 Error Handling: error.tsx, Server Actions, and Sentry (2026)
 
-**Primary Tech:** TypeScript
+**Primary Tech:** NextJS
 
 ## 🎥 Video Script
-(Video opens with a subtle animation of code flowing into structured data, then a developer at a desk, looking thoughtful.)
+Hey everyone! You know that sinking feeling when a user reports a vague error, and you’re left digging through logs, wondering what went wrong and where? I've been there countless times. I remember a particularly gnarly incident on a Black Friday launch – a critical component silently failed for a subset of users, and because our error boundaries weren't robust enough, the entire page just… froze. We were scrambling, losing sales, and it was pure chaos.
 
-Hey everyone. Ever found yourself staring at an LLM’s beautifully creative, yet utterly *unparseable*, response? Like it wrote a masterpiece, but you needed JSON? Yeah, me too.
-
-I remember building a content generation tool. The AI was spitting out brilliant marketing copy, but our UI needed specific fields: headline, body, CTA, tags. We kept tweaking prompts, begging it to give us JSON. It was like teaching a cat to fetch. The ‘aha!’ moment hit when we realized the AI didn’t need to *understand* JSON like a human. It just needed to reliably *produce* a string that *looked* like JSON, conforming to a pattern we defined. We shifted from trying to make the AI "right" to making it "procedural."
-
-Here’s the thing: your AI doesn’t need semantic perfection. It needs to give your system something actionable, something it can process step-by-step. Focus on the output contract, not its internal 'thought' process. Treat your AI like a powerful, but naive, function, and then build robust parsing and validation around it. That’s your actionable takeaway: engineer for procedural reliability, not cognitive infallibility.
+That's why I'm genuinely excited about where Next.js 15 is taking us with error handling, especially with `error.tsx` and Server Actions. It's not just about catching errors; it's about designing resilient user experiences and gaining true visibility. With `error.tsx`, we get this declarative way to gracefully degrade UI segments, keeping the rest of the app functional. And with Server Actions, while they bring immense power, they also shift where errors can originate, making robust `try/catch` patterns and holistic observability via tools like Sentry absolutely non-negotiable. The big takeaway for 2026? Proactive, layered error handling isn't a "nice-to-have"; it's foundational to shipping dependable, performant applications. Let's make those future Black Fridays a little less stressful, shall we?
 
 ## 🖼️ Image Prompt
-A minimalist, professional developer aesthetic with a dark background (#1A1A1A). Dominant visual elements are abstract code blocks, clearly indicating type annotations like `interface`, `type`, `string`, `number`, `boolean`, and generic patterns (`<T>`) in a subtle, glowing blue hue, representing TypeScript. These code structures are interconnected with thin, golden (#C9A227) lines and arrows, symbolizing data flow and relationships within a typed system. Interspersed within or alongside these TypeScript elements are abstract representations of procedural logic: subtle gear outlines, circuit board traces, or flowing block diagrams, also in gold, suggesting automation and structured execution. A faint, almost ghost-like neural network pattern or abstract brain shape in the distant background, also in gold, hints at the AI source, but the foreground emphasizes the structured, predictable nature enforced by the code. The overall composition should convey precision, control, and the transformation of raw AI output into dependable, type-safe data. No text or logos.
+A minimalist, professional developer-focused visual on a dark background (#1A1A1A). In the center, a stylized "N" shape (representing Next.js) is subtly fractured or broken into segments, with abstract gold (#C9A227) lightning bolts or error symbols emanating from the breaks. On one side, subtle server racks or code blocks with a "processing" glow represent Server Actions, connected by a flowing gold line to the fractured "N". On the other side, abstract UI components are partially dimmed or replaced by a glowing gold "shield" icon, symbolizing `error.tsx` gracefully catching and displaying a fallback. Above the entire scene, a discreet, abstract "eye" or "beacon" icon in gold emits a faint signal, representing Sentry's observability, capturing the errors as they occur. The overall aesthetic is clean, technical, and conveys both the potential for errors and the robust systems in place to handle them.
 
 ## 🐦 Expert Thread
-1/6 AI doesn't need to be "right" in its deep understanding. It just needs to *sound procedural* so our systems can use its output. This is a crucial distinction for engineering teams building with LLMs. #AI #LLM #SoftwareEngineering
+1/7 The "it works on my machine" era is over. Next.js 15's `error.tsx` isn't just a fallback UI; it's a declarative contract for UI resilience. You *must* design your app around these boundaries. #Nextjs15 #ErrorHandling
 
-2/6 How do we make it "sound procedural"? By enforcing structure. I've found TypeScript, combined with runtime validation (like `zod`), to be absolutely indispensable. Your `interface` becomes the contract the AI must fulfill. #TypeScript #Zod #TechDebt
+2/7 Server Actions: pure magic, but don't get complacent. Errors thrown on the server don't magically trigger client-side `error.tsx` unless you let them propagate *uncaught*. `try/catch` in your actions is non-negotiable for graceful API-level failures.
 
-3/6 Many teams over-index on prompt engineering alone. A perfect prompt is great, but a robust parsing, validation, and fallback strategy is *essential*. The AI WILL hallucinate your schema at some point. Plan for it. #PromptEngineering #ResilientSystems
+3/7 Here's the catch: `error.tsx` handles rendering errors. Server Actions, when handled gracefully with `try/catch`, return structured data. Know the difference. One is for UX, the other for logical flow. Don't confuse them.
 
-4/6 Think of your LLM like a highly specialized, very eloquent, but sometimes forgetful junior dev. Give it clear instructions, check its work diligently, and have a plan for when it gets creative outside the lines. Trust, but verify. #DevOps #AIIntegration
+4/7 The `error.tsx` `digest` prop in Next.js? A subtle but powerful signal. It helps correlate client-side error boundary catches with specific server-side errors, especially when Sentry is involved. Use it. Debug faster. #WebDev
 
-5/6 The real magic isn't the AI generating text; it's our ability to confidently integrate that text into production apps. TypeScript + runtime validation bridges the compile-time safety with runtime unpredictability. This is how we make AI production-ready. #CodeQuality
+5/7 If you're using Next.js 15 and Server Actions without robust Sentry (or equivalent) across *both* client and server... you're flying blind. Server-side errors don't always make it to the client. Full-stack observability is paramount.
 
-6/6 Stop chasing semantic perfection from your AI when structural adherence is the real goal. The 'rightness' is in your system's ability to use the output, not the AI's internal 'truth.' What's your go-to strategy for robust LLM output handling?
+6/7 My biggest lesson from complex Next.js projects: Proactive error handling is an architectural decision, not an afterthought. Design for failure from day one. Your future self, and your users, will thank you.
+
+7/7 Are we truly leveraging Next.js's error handling to move beyond "break/fix" to "prevent/predict"? Or are we still just reacting? The tools are there; the mindset shift is ours. What's your biggest error handling headache in 2026? #SoftwareEngineering #DevOps
 
 ## 📝 Blog Post
-# Taming the Narrative: How TypeScript Makes Your AI's "Procedural Sound" a Reliable Reality
+# Navigating the Storm: Next.js 15 Error Handling, Server Actions, and Sentry in 2026
 
-Let’s be honest. When you first start playing with LLMs, it feels like magic. You ask for marketing copy, and boom—it delivers something creative, engaging, and sometimes, genuinely insightful. But then reality hits. You need that copy not just as a blob of text, but as a structured object: a headline, a body paragraph, a call to action, and perhaps a few SEO tags. And the AI, bless its heart, decides to give you a delightful anecdote about squirrels instead of a JSON object. Or, worse, it gives you JSON, but it’s malformed, or missing a critical field.
+I've been building web applications for a while now, and one truth remains constant: errors happen. They always do. I still recall the panicked call from a client, "The entire checkout page is blank!" My stomach dropped. Turns out, a seemingly innocuous API call in a deeply nested component had failed, and without proper error boundaries, the whole thing just silently imploded. We were logging some errors, sure, but understanding the *context* and gracefully recovering the UI? That was a scramble.
 
-Sound familiar? I’ve been there. My team was building an internal tool to automate the first draft of some client-facing content. We wanted the AI to generate a product description. Simple, right? We’d prompt it, get back some text, and then our app would just render it. Except, our app didn’t just render text; it had distinct UI components for titles, paragraphs, bullet points, and buttons. Relying on the AI to *always* output text that could be reliably parsed into these components was, frankly, a naive pipe dream. We needed the AI to *sound procedural*. We needed structure, and we needed guarantees.
+This experience taught me a profound lesson: error handling isn't just about preventing crashes; it's about delivering a resilient, understandable user experience and giving your team the tools to diagnose issues quickly. And as we push deeper into the capabilities of frameworks like Next.js 15, especially with its powerful Server Actions and the declarative `error.tsx` boundaries, our approach to error handling needs to evolve. We're building full-stack applications with an unprecedented level of integration between client and server, meaning errors can originate anywhere and propagate in fascinating, sometimes frustrating, ways.
 
-### Why "Sounding Procedural" Matters More Than Being "Right"
+## The Declarative Embrace: `error.tsx` in Next.js 15
 
-Here's the core insight: your AI doesn't need to be "right" in a philosophical sense. It doesn't need to deeply understand the concept of a `MarketingContent` interface or why a `callToAction` should always be a string. What it *does* need to do is consistently generate output that *looks* procedural enough for your application to consume without breaking. The "rightness" is actually in your system's ability to reliably process the AI's output.
+Gone are the days where you'd manually sprinkle `try/catch` blocks around every potential client-side failure point just to show a fallback UI. Next.js 15's `error.tsx` is a game-changer, embracing a declarative pattern akin to React's Error Boundaries but deeply integrated into the App Router.
 
-In my experience, many teams new to AI integration get stuck trying to perfect their prompts, adding more and more constraints: "Output only JSON," "Ensure 'headline' is present," "No preamble or postamble." While good prompt engineering is vital, it's rarely a silver bullet. The AI will eventually hallucinate, omit, or malform. This is where engineering rigor, specifically with TypeScript and runtime validation, shines.
+Here's the thing: `error.tsx` acts as an error boundary for a *segment* of your application. If an error is thrown within that segment (or any of its children), `error.tsx` catches it, prevents the crash, and allows you to display a fallback UI, keeping the rest of your application functional. This means instead of your entire page going blank, perhaps just a single widget or a specific data display fails gracefully.
 
-We need to shift our mental model. Think of the LLM not as a wise sage, but as an incredibly powerful, yet naive, text transformer that we're asking to act like a highly specialized compiler. It's generating strings based on statistical patterns, not semantic understanding. Our job, as developers, is to put a robust parsing and validation layer between that string output and our strongly typed application.
+```tsx
+// app/dashboard/error.tsx
+'use client'; // Error boundaries must be client components
 
-### The TypeScript Contract: Defining the AI's Procedural Output
+import { useEffect } from 'react';
 
-Let's ground this with a practical example. Imagine we want our AI to generate a structured product description.
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Optionally log the error to an error reporting service
+    // In my experience, this is critical for server-side errors that bubble up
+    console.error(error);
+  }, [error]);
 
-First, we define what that structure *should* look like using a TypeScript interface and a validation schema (I highly recommend `zod` for this, as it gives you both compile-time types and runtime validators).
-
-```typescript
-// src/schemas/productContent.ts
-import { z } from 'zod';
-
-// Define the Zod schema for our product content
-export const productContentSchema = z.object({
-  title: z.string().min(5, "Title must be at least 5 characters long."),
-  description: z.string().min(20, "Description must be at least 20 characters long."),
-  features: z.array(z.string()).min(1, "Product must have at least one feature."),
-  callToAction: z.string().optional(), // Optional field
-});
-
-// Infer the TypeScript type from the Zod schema
-export type ProductContent = z.infer<typeof productContentSchema>;
+  return (
+    <div className="flex flex-col items-center justify-center p-8 bg-red-100 border border-red-400 rounded-lg">
+      <h2 className="text-xl font-semibold text-red-800">Something went wrong!</h2>
+      <p className="mt-2 text-red-700">We're sorry, but there was an issue loading this section.</p>
+      <button
+        className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          () => reset()
+        }
+      >
+        Try again
+      </button>
+      <p className="mt-2 text-sm text-red-500">Error digest: {error.digest || 'N/A'}</p>
+    </div>
+  );
+}
 ```
 
-This `ProductContent` type is our contract. It declares exactly what we expect from the AI’s procedural output. The `zod` schema isn't just for compile-time; it's our runtime guardian.
+Notice the `'use client'` directive. If your `error.tsx` needs interactivity (like that "Try again" button), it must be a client component. What I've found incredibly powerful is how this system prevents cascading failures. If your `error.tsx` is at `app/dashboard/error.tsx`, an error in `app/dashboard/settings/page.tsx` will be caught by *that* boundary, not taking down the entire `dashboard` layout.
 
-### Crafting the Prompt and Handling Output
+## Taming the Backend Beast: Errors in Server Actions
 
-Now, let's craft a prompt that guides the AI toward this structure. We'll explicitly ask for JSON.
+Server Actions are incredible for unifying client-side interactions with server-side logic, but they introduce a new dimension to error handling. When an error occurs within a Server Action, it doesn't automatically trigger the nearest `error.tsx` on the client. Why? Because the Server Action executes *on the server*, and its result (or error) is returned to the client-side code that invoked it.
+
+This means you absolutely *must* wrap your Server Action logic in `try/catch` blocks if you want to handle specific error conditions gracefully or return user-friendly messages.
 
 ```typescript
-// src/services/aiService.ts
-import { productContentSchema, ProductContent } from '../schemas/productContent';
+// app/dashboard/actions.ts
+'use server';
 
-// A simple helper to extract potential JSON from an LLM response
-// LLMs often wrap JSON in markdown code blocks.
-function extractJsonString(text: string): string | null {
-  const match = text.match(/```json\n([\s\S]*?)\n```/);
-  return match ? match[1] : null;
-}
+import { revalidatePath } from 'next/cache';
 
-export async function generateProductContent(
-  productName: string,
-  keyFeatures: string[]
-): Promise<ProductContent | null> {
-  const prompt = `
-    Generate a concise product description for "${productName}".
-    Include a compelling title, a detailed description, and a list of key features.
-    Optionally, include a call to action.
-    
-    Format the output as a JSON object strictly adhering to this schema:
-    ${JSON.stringify({
-      title: "string",
-      description: "string",
-      features: ["string"],
-      callToAction: "string (optional)"
-    }, null, 2)}
-    
-    Example:
-    \`\`\`json
-    {
-      "title": "Super Gadget 5000",
-      "description": "The Super Gadget 5000 is a revolutionary device...",
-      "features": ["Feature A", "Feature B"],
-      "callToAction": "Buy Now!"
-    }
-    \`\`\`
-    
-    Now, generate the content for "${productName}" with features: ${keyFeatures.join(', ')}.
-    `;
-
+export async function createProduct(formData: FormData) {
   try {
-    // In a real app, this would be an API call to your LLM provider
-    // For demonstration, let's simulate an AI response
-    const mockApiResponse = {
-      text: `
-      Here's your product description:
-      
-      \`\`\`json
-      {
-        "title": "${productName} - The Future Unleashed",
-        "description": "Experience unparalleled innovation with the new ${productName}. Seamlessly integrating advanced technology with user-centric design, it redefines efficiency and elegance in your daily life.",
-        "features": [
-          "Effortless Setup and Integration",
-          "Intuitive User Interface",
-          "Robust Security Protocols"
-        ],
-        "callToAction": "Discover the Difference Today!"
-      }
-      \`\`\`
-      `
-    };
+    const name = formData.get('name') as string;
+    const price = parseFloat(formData.get('price') as string);
 
-    const rawAIOutput = mockApiResponse.text;
-    const jsonString = extractJsonString(rawAIOutput);
-
-    if (!jsonString) {
-      console.error("AI did not return a valid JSON block.");
-      return null;
+    if (!name || isNaN(price) || price <= 0) {
+      throw new Error('Invalid product data provided.');
     }
 
-    // Attempt to parse the string into a JavaScript object
-    const parsedObject = JSON.parse(jsonString);
+    // Simulate a database operation that might fail
+    const result = await fetch('https://api.example.com/products', {
+      method: 'POST',
+      body: JSON.stringify({ name, price }),
+      headers: { 'Content-Type': 'application/json' },
+    });
 
-    // Validate the parsed object against our Zod schema
-    const validatedContent = productContentSchema.parse(parsedObject);
-
-    return validatedContent;
-
-  } catch (error) {
-    // Crucial: Handle parsing or validation failures gracefully
-    if (error instanceof z.ZodError) {
-      console.error("AI output failed schema validation:", error.errors);
-    } else {
-      console.error("Failed to parse AI response:", error);
+    if (!result.ok) {
+      // Here, we catch API errors and re-throw a more controlled error
+      const errorData = await result.json();
+      throw new Error(errorData.message || 'Failed to create product.');
     }
-    return null; // Return null or throw a custom error
+
+    revalidatePath('/dashboard/products');
+    return { success: true, message: `Product "${name}" created!` };
+  } catch (error: any) {
+    // Log the error for server-side debugging BEFORE returning to client
+    console.error('Server Action Error: ', error);
+    // Return a structured error object to the client
+    return { success: false, message: error.message || 'An unexpected error occurred.' };
   }
 }
 ```
 
-Notice a few things:
-1.  **Explicit Schema in Prompt:** We're not just saying "JSON." We're providing the expected JSON *structure* in the prompt. This gives the LLM a much clearer target.
-2.  **`extractJsonString`:** LLMs often output conversational text or wrap JSON in markdown blocks. This helper tries to extract just the JSON.
-3.  **`JSON.parse`:** This is the first hurdle. If the AI outputs malformed JSON, this will throw.
-4.  **`productContentSchema.parse`:** This is the critical runtime validation step. Even if `JSON.parse` succeeds, the resulting object might not match our `ProductContent` type. `zod.parse()` will throw a `ZodError` if the object doesn't conform.
+On the client side, you then handle this returned error:
 
-### Consuming the Validated AI Output in React
+```tsx
+// app/dashboard/page.tsx
+'use client';
 
-Now, our React component can confidently display this content, knowing it adheres to the `ProductContent` type.
+import { useState } from 'react';
+import { createProduct } from './actions';
 
-```typescript
-// src/components/ProductCard.tsx
-import React, { useEffect, useState } from 'react';
-import { ProductContent } from '../schemas/productContent';
-import { generateProductContent } from '../services/aiService';
+export default function DashboardPage() {
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-interface ProductCardProps {
-  productName: string;
-  features: string[];
-}
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setStatusMessage(null);
 
-const ProductCard: React.FC<ProductCardProps> = ({ productName, features }) => {
-  const [content, setContent] = useState<ProductContent | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+    const formData = new FormData(event.currentTarget);
+    const result = await createProduct(formData); // Call the server action
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const generated = await generateProductContent(productName, features);
-        if (generated) {
-          setContent(generated);
-        } else {
-          setError("Failed to generate valid product content.");
-        }
-      } catch (e) {
-        setError("An unexpected error occurred while fetching content.");
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchContent();
-  }, [productName, features]);
-
-  if (loading) return <div className="p-4 bg-gray-800 text-gray-200 rounded-lg shadow animate-pulse">Generating product details...</div>;
-  if (error) return <div className="p-4 bg-red-800 text-white rounded-lg shadow">Error: {error}</div>;
-  if (!content) return <div className="p-4 bg-yellow-800 text-white rounded-lg shadow">No content available.</div>;
+    if (result.success) {
+      setStatusMessage(`Success: ${result.message}`);
+    } else {
+      setStatusMessage(`Error: ${result.message}`);
+    }
+    setIsSubmitting(false);
+  };
 
   return (
-    <div className="max-w-md mx-auto bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 rounded-xl shadow-2xl overflow-hidden my-8 transform hover:scale-105 transition-all duration-300">
-      <div className="p-6">
-        <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-yellow-500 mb-3">{content.title}</h2>
-        <p className="text-gray-300 leading-relaxed mb-6">{content.description}</p>
-        <h3 className="text-xl font-semibold text-gold-300 mb-3">Key Features:</h3>
-        <ul className="list-disc list-inside space-y-2 mb-6">
-          {content.features.map((feature, index) => (
-            <li key={index} className="text-gray-300 flex items-center">
-              <span className="text-gold-400 mr-2">&#10003;</span> {feature}
-            </li>
-          ))}
-        </ul>
-        {content.callToAction && (
-          <button className="w-full bg-gold-600 hover:bg-gold-700 text-gray-900 font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-300 shadow-md transform hover:scale-102">
-            {content.callToAction}
-          </button>
-        )}
-      </div>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Create New Product</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Product Name</label>
+          <input type="text" id="name" name="name" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <div>
+          <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" step="0.01" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <button type="submit" disabled={isSubmitting} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">
+          {isSubmitting ? 'Creating...' : 'Create Product'}
+        </button>
+      </form>
+      {statusMessage && (
+        <p className={`mt-4 ${statusMessage.startsWith('Error') ? 'text-red-600' : 'text-green-600'}`}>
+          {statusMessage}
+        </p>
+      )}
+      {/* This component could also throw an error from other logic, which error.tsx would catch */}
+      {/* Example: <ProductList /> which might fail to fetch initial data */}
     </div>
   );
-};
-
-export default ProductCard;
+}
 ```
 
-This component can render `content.title`, `content.description`, and map over `content.features` without fear of runtime type errors because we’ve ensured the data conforms to `ProductContent`. The "AI doesn't need to be right" because our TypeScript code *makes* it procedurally correct for our application's needs.
+The critical insight here is that `error.tsx` only catches errors that occur during the *render* cycle or *data fetching* within its boundary. Errors from Server Actions that are properly `try/catch`-ed and return a structured `result` object will be handled *imperatively* by your client component. However, if a Server Action throws an *uncaught* error on the server *and* that error then causes a rendering issue (e.g., corrupt data invalidates a React component's expectations), *then* `error.tsx` might catch the subsequent client-side rendering error. It's a nuanced distinction, but vital for robust design.
 
-### Insights Beyond the Code
+## The Watchful Eye: Sentry for Comprehensive Observability
 
-What most tutorials miss is the mindset shift:
-*   **AI is a Tool, Not a Oracle:** Stop treating the LLM as something that "knows" or "understands." It's a predictive text engine. Your engineering provides the intelligence layer.
-*   **Redundancy is a Feature:** Good prompt engineering and robust runtime validation aren't mutually exclusive. They're complementary. The prompt helps the AI aim; the validation catches where it misses.
-*   **Graceful Degradation:** What happens when the AI *completely* fails to produce valid JSON? Your system needs a plan. Show a default, a placeholder, or a helpful error message to the user, rather than crashing.
+`error.tsx` provides a beautiful user experience. Your `try/catch` in Server Actions gives you granular control. But neither tells you *what* truly happened across your entire application, in production, when you're not actively debugging. This is where Sentry (or a similar error monitoring tool) becomes indispensable.
 
-### Common Pitfalls to Avoid
+In my experience, if you're not capturing errors consistently across both your client and server, you're flying blind. Next.js 15, with its client/server component architecture, requires a dual-pronged Sentry setup:
 
-1.  **"Prompt-Only" Reliability:** Believing that if your prompt is perfect, the AI will *always* comply. It won't.
-2.  **Ignoring Edge Cases:** Assuming the AI will always provide *exactly* what you asked for. It might add conversational text, malform brackets, or omit fields. Your parsing logic needs to be resilient.
-3.  **Compile-Time Only Thinking:** Relying solely on TypeScript interfaces without runtime validation. Remember, the AI's output is an external API call; TypeScript cannot validate it at compile-time.
-4.  **No Fallbacks:** Failing to implement retry mechanisms, default data, or clear error states for when AI output isn't usable.
+1.  **Client-side Sentry:** Captures errors that bubble up from your client components, typically caught by `error.tsx` (which then logs it) or unhandled errors in your interactive client-side logic.
+2.  **Server-side Sentry:** Critical for capturing errors within your Server Components, Server Actions, API routes, and any other Node.js logic. These are errors that often happen before a browser even sees anything.
 
-### Wrapping Up
+The setup usually involves initializing Sentry in `sentry.client.config.ts` and `sentry.server.config.ts`, ensuring you have the correct DSNs and environment variables. Then, within your `error.tsx` component, you'd use `Sentry.captureException(error)` in the `useEffect` hook. For Server Actions, you'd integrate `Sentry.captureException(error)` directly within your `catch` block *before* returning the error to the client.
 
-Ultimately, making AI "sound procedural" isn't about teaching an LLM to code. It's about building strong, resilient software around it. TypeScript, especially when paired with runtime validation libraries like `zod`, provides the crucial safety net. It allows us to treat the unpredictable output of generative AI as a predictable data contract within our application.
+```typescript
+// app/sentry.server.config.ts (simplified example)
+import * as Sentry from "@sentry/nextjs";
 
-This approach transforms AI from a source of delightful, yet potentially chaotic, text into a reliable, integrated component of your engineering stack. It's about leveraging the power of AI while maintaining the robustness and maintainability we expect from any professional codebase.
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  // ... other configs
+});
+
+// app/dashboard/actions.ts (updated for Sentry)
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import * as Sentry from "@sentry/nextjs"; // Import Sentry
+
+export async function createProduct(formData: FormData) {
+  try {
+    // ... existing logic ...
+  } catch (error: any) {
+    console.error('Server Action Error: ', error);
+    Sentry.captureException(error); // Capture this server-side error
+    return { success: false, message: error.message || 'An unexpected error occurred.' };
+  }
+}
+```
+
+This holistic approach gives you stack traces, user context, breadcrumbs, and release monitoring, helping you move from "what happened?" to "what caused it, who was affected, and how do we fix it?"
+
+## Pitfalls to Avoid (Lessons Learned the Hard Way)
+
+*   **Forgetting `use client` in `error.tsx`:** If your `error.tsx` needs state, event handlers, or effects, it *must* be a client component. I've wasted precious minutes debugging hydration errors because of this oversight.
+*   **Not logging server-side errors:** An error caught by `error.tsx` on the client might have originated on the server. If you don't log it *on the server* (e.g., in your Server Action's `catch` block or a global server-side error handler), you'll miss crucial context. Sentry helps bridge this gap.
+*   **Over-catching vs. letting `error.tsx` handle it:** Distinguish between operational errors (like "invalid input") that you handle gracefully within your logic, and unexpected programming errors (like a `TypeError` from missing data) that `error.tsx` should catch. Don't `try/catch` everything; let the boundaries do their job for true exceptions.
+*   **Incomplete Sentry setup:** Ensure both client-side and server-side Sentry configurations are correct. It's easy to miss one, leading to blind spots. Test your error logging in development and staging environments.
+*   **Testing error boundaries:** Actively test your `error.tsx` components. Intentionally throw errors in different parts of your app to ensure the correct boundary catches them and displays the expected fallback.
+
+## Wrapping It Up: Building Resilient Next.js Apps
+
+Next.js 15, with its advanced error handling mechanisms and the power of Server Actions, empowers us to build incredibly dynamic and efficient applications. But with great power comes the need for robust error strategies.
+
+By thoughtfully employing `error.tsx` for graceful UI degradation, strategically using `try/catch` within your Server Actions for granular control, and integrating a comprehensive observability platform like Sentry, you’re not just catching errors; you're building a resilient, maintainable, and ultimately more user-friendly application. Embrace these tools, and you’ll find yourself spending less time reacting to production fires and more time innovating.
