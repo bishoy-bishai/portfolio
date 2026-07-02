@@ -1,33 +1,10 @@
-# REVIEW: Why rour AI agent struggles with full-stack apps
+---
+title: "Why rour AI agent struggles with full-stack apps"
+description: "Why Our AI Agent Still Stumbles on Full-Stack..."
+pubDate: "Jul 02 2026"
+heroImage: "../../assets/why-rour-ai-agent-struggles-with-full-stack-apps.jpg"
+---
 
-**Primary Tech:** NextJS
-
-## 🎥 Video Script
-Alright, let’s talk about something I’ve seen a lot of developers grapple with lately: the promise of AI agents automating full-stack development versus the messy reality. You know the drill, right? We hear about AI writing perfect code, building entire features with a simple prompt. And then we try it.
-
-I remember this one time, I was trying to get an agent to scaffold a fairly standard Next.js feature – a simple authenticated API route for a user profile, connected to a database, with proper data fetching on the frontend. Seemed straightforward enough. But it kept falling apart at the *seams*. It’d get the API route syntax mostly right, then completely bungle the server component's data fetching, perhaps trying to use `useState` directly in a server environment, or missing crucial type definitions for the API response. It’s like it understood the ingredients but couldn't quite bake the cake.
-
-Here’s the thing: full-stack isn’t just about putting a frontend and backend together. It’s about the nuanced *integration*, the implicit contracts, the understanding of state management across layers, and the subtle environmental configurations. An AI agent, as powerful as it is, often misses this intricate dance. My "aha!" moment was realizing it needed *me* to define the architecture, not generate it from scratch. So, the takeaway? AI agents are phenomenal tools for boilerplate and focused tasks, but for true full-stack orchestration, human architects are still irreplaceable.
-
-## 🖼️ Image Prompt
-A dark background (#1A1A1A) with striking gold accents (#C9A227). In the foreground, abstract, geometric shapes reminiscent of Next.js (flowing 'N' patterns, server/client split visualized by distinct, interconnected but separated blocks) are tangled with glowing, broken circuit lines and fragmented code blocks. A subtle, ethereal network of neural pathways or a stylized, slightly confused brain-like structure, rendered in gold, attempts to grasp and connect these chaotic, disparate elements. Data flow arrows are incomplete or pointing in incorrect directions, symbolizing struggle and misinterpretation. The overall impression is one of complex, interwoven systems that are beyond the current understanding or capability of an otherwise sophisticated AI trying to achieve full integration. Minimalist, professional, and developer-focused, without any text or logos.
-
-## 🐦 Expert Thread
-1/7 The hype says AI agents build full-stack apps from scratch. The reality? They're more like brilliant, but context-blind, apprentices. They struggle with the *seams* between frontend, backend, and database. #AI #FullStack #DeveloperReality
-
-2/7 Why the struggle? Full-stack isn't just about syntax. It's about implicit contracts, data flow architecture, and subtle framework paradigms like Next.js Server vs. Client Components. AI misses the "why." #NextJS #AIagent #WebDev
-
-3/7 I've seen AI try to use `useState` in a #NextJS Server Component or generate inefficient data fetching patterns. It's like having all the ingredients but no recipe for the specific dish you're making. Context is EVERYTHING.
-
-4/7 Type safety? An AI can write `interface User { id: any; name: string }` all day. But truly robust, end-to-end types reflecting real database schemas and API responses? That requires semantic understanding an LLM just doesn't have (yet). #TypeScript #LLM
-
-5/7 The "last mile" problem is real. AI can get you 80% of the way on boilerplate. But the critical 20%—integration, edge cases, security, performance tuning, and maintainability—still demands human architect-level thinking.
-
-6/7 Best use for AI in full-stack? As a super-powered assistant for isolated tasks. Give it precise, small problems, provide existing context, and then critically review. It's a force multiplier, not a replacement. #DevTools #Productivity
-
-7/7 The full-stack architect role isn't going anywhere. Our job is evolving: from writing every line to orchestrating intelligent tools. Are we truly leveraging AI, or just delegating complexity we don't want to solve ourselves? 🤔 #FutureOfWork #SoftwareEngineering
-
-## 📝 Blog Post
 # Why Our AI Agent Still Stumbles on Full-Stack Apps
 
 We've all been there. You're riding high on the AI hype, picturing your agent effortlessly spinning up features, leaving you free for higher-level architectural decisions. You feed it a prompt like, "Build me a simple user profile page with authentication, connected to a database, using Next.js and TypeScript." You hit enter, grab a coffee, and expect magic.
